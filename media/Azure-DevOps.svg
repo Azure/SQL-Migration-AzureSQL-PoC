@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25px" height="25px" viewBox="0 0 25 25" version="1.1">
+<defs>
+<linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="9" y1="16.97" x2="9" y2="1.03" gradientTransform="matrix(1.388889,0,0,1.388889,0,0)">
+<stop offset="0" style="stop-color:rgb(0%,47.058824%,83.137255%);stop-opacity:1;"/>
+<stop offset="0.16" style="stop-color:rgb(7.45098%,50.196078%,85.490196%);stop-opacity:1;"/>
+<stop offset="0.53" style="stop-color:rgb(23.529412%,56.862745%,89.803922%);stop-opacity:1;"/>
+<stop offset="0.82" style="stop-color:rgb(33.333333%,61.176471%,92.54902%);stop-opacity:1;"/>
+<stop offset="1" style="stop-color:rgb(36.862745%,62.745098%,93.72549%);stop-opacity:1;"/>
+</linearGradient>
+</defs>
+<g id="surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:url(#linear0);" d="M 23.609375 5.554688 L 23.609375 19.085938 L 18.054688 23.640625 L 9.445312 20.5 L 9.445312 23.609375 L 4.570312 17.234375 L 18.777344 18.347656 L 18.777344 6.164062 Z M 18.875 6.234375 L 10.902344 1.390625 L 10.902344 4.570312 L 3.585938 6.722656 L 1.390625 9.539062 L 1.390625 15.945312 L 4.527344 17.335938 L 4.527344 9.125 Z M 18.875 6.234375 "/>
+</g>
+</svg>

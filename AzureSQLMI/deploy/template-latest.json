@@ -1,0 +1,780 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "_generator": {
+            "name": "bicep",
+            "version": "0.6.18.56646",
+            "templateHash": "2543092560055024764"
+        }
+    },
+    "parameters": {
+        "suffixName": {
+            "type": "string",
+            "metadata": {
+                "description": "Suffix with up to 8 character"
+            }
+
+        }
+    },
+    "variables": {
+        // Storage account
+        "storageAccountName": "[toLower(concat('storage',parameters('suffixName')))]",
+
+        // Database Migration Service
+        "dmsName": "PoCMigrationService",
+
+        // SQL VM
+        "location": "[resourceGroup().location]",
+        "virtualMachineName": "sqlvm-001",
+        "virtualMachineSize": "Standard_D8s_v3",
+        "imageOffer": "sql2019-ws2019",
+        "sqlSku": "SQLDEV",
+        "storageWorkloadType": "General",
+        "sqlDataDisksCount": 1,
+        "dataPath": "F:\\SQLData",
+        "sqlLogDisksCount": 1,
+        "logPath": "G:\\SQLLog",
+      
+        "adminUsername": "sqladmin",
+        "adminPassword": "My$upp3r$ecret",
+        "diskConfigurationType": "NEW",
+        "dataDisksLuns": "[array(range(0, variables('sqlDataDisksCount')))]",
+        "logDisksLuns": "[array(range(variables('sqlDataDisksCount'), variables('sqlLogDisksCount')))]",
+        "dataDisks": {
+            "createOption": "Empty",
+            "caching": "ReadOnly",
+            "writeAcceleratorEnabled": false,
+            "storageAccountType": "Premium_LRS",
+            "diskSizeGB": 1023
+        },
+        "tempDbPath": "D:\\SQLTemp",      
+
+        // Networking
+        "virtualNetworksName": "[concat('vnet-',parameters('suffixName'))]",
+        "networkInterfaceName": "[format('{0}-nic', variables('virtualMachineName'))]",
+        "networkSecurityGroupName": "[format('{0}-nsg', variables('virtualMachineName'))]",
+        "networkSecurityGroupRules": [
+            {
+                "name": "RDP",
+                "properties": {
+                    "priority": 300,
+                    "protocol": "TCP",
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "destinationAddressPrefix": "*",
+                    "destinationPortRange": "3389"
+                }
+            },
+            {
+                "name": "AllowAnyMS_SQLInbound",
+                "properties": {
+                    "protocol": "TCP",
+                    "sourcePortRange": "*",
+                    "destinationPortRange": "1433",
+                    "sourceAddressPrefix": "*",
+                    "destinationAddressPrefix": "*",
+                    "access": "Allow",
+                    "priority": 310,
+                    "direction": "Inbound",
+                    "sourcePortRanges": [],
+                    "destinationPortRanges": [],
+                    "sourceAddressPrefixes": [],
+                    "destinationAddressPrefixes": []
+                }
+            }
+        ],
+        "publicIpAddressName": "[format('{0}-publicip-{1}', variables('virtualMachineName'), uniqueString(variables('virtualMachineName')))]",
+        "publicIpAddressType": "Dynamic",
+        "publicIpAddressSku": "Basic",
+        
+
+        // SQL MI 
+        "SQLMIName": "[if(greaterOrEquals(length(toLower(concat('sqlmi','-',parameters('suffixName')))),60),substring(toLower(concat('sqlmi','-',toLower(concat('sqlmi','-',parameters('suffixName'))))),0,60),toLower(concat('sqlmi','-',parameters('suffixName'))))]",
+        "SQLMIAdministratorLogin": "sqladmin",
+        "SQLMIAdministratorLoginPassword": "My$upp3r$ecret",
+        "SQLMIVirtualNetworkName": "vnet-sqlmi",
+        "SQLMIAddressPrefix": "10.0.0.0/16",
+        "SQLMISubnetName": "ManagedInstance",
+        "SQLMISubnetPrefix": "10.0.0.0/24",
+        "SQLMIskuName": "GP_Gen5",
+        "SQLMIvCores": 4,
+        "SQLMIStorageSizeInGB": 256,
+        "SQLMILicenseType": "LicenseIncluded",
+        "SQLMINetworkSecurityGroupName": "[format('sqlmi-{0}-nsg', parameters('suffixName'))]",
+        "SQLMIRouteTableName": "[format('sqlmi-{0}-route-table', parameters('suffixName'))]",
+
+        // Jump Box
+        "jbVirtualMachineName": "jb-migration",
+        "jbNetworkInterfaceName": "jb-migration-nic",
+        "jbNetworkSecurityGroupName": "jb-migration-nsg",
+        "jbPublicIpAddressName": "jb-migration-ip",
+        "jbVirtualNetworksName": "vnet-jb-migration",
+        "SQLMIManagementSubnetName": "management",
+        "SQLMIManagementSubnetPrefix": "10.0.1.0/24"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2021-04-01",
+            "name": "[variables('storageAccountName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage"
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2022-05-01",
+            "name": "[concat(variables('storageAccountName'), '/default/migration')]",
+            "dependsOn": [
+                "[variables('storageAccountName')]"
+            ],
+            "properties": {
+                "publicAccess": "Blob"
+            }
+        },
+        // Azure DMS
+        {
+            "type": "Microsoft.DataMigration/sqlMigrationServices",
+            "apiVersion": "2022-03-30-preview",
+            "name": "[variables('dmsName')]",
+            "location": "[variables('location')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('publicIpAddressName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "[variables('publicIpAddressSku')]"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIpAddressType')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('networkSecurityGroupName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "securityRules": "[variables('networkSecurityGroupRules')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('virtualNetworksName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.1.0.0/16"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": []
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.1.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+                            },
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('networkInterfaceName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.1.0.4",
+                            "privateIPAllocationMethod": "Static",
+
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworksName'), 'default')]"
+                            },
+
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))]"
+                            }
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": true
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-11-01",
+            "name": "[variables('virtualMachineName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[length(range(0, add(variables('sqlDataDisksCount'), variables('sqlLogDisksCount'))))]",
+                            "input": {
+                                "lun": "[range(0, add(variables('sqlDataDisksCount'), variables('sqlLogDisksCount')))[copyIndex('dataDisks')]]",
+                                "createOption": "[variables('dataDisks').createOption]",
+                                "caching": "[if(greaterOrEquals(range(0, add(variables('sqlDataDisksCount'), variables('sqlLogDisksCount')))[copyIndex('dataDisks')], variables('sqlDataDisksCount')), 'None', variables('dataDisks').caching)]",
+                                "writeAcceleratorEnabled": "[variables('dataDisks').writeAcceleratorEnabled]",
+                                "diskSizeGB": "[variables('dataDisks').diskSizeGB]",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dataDisks').storageAccountType]"
+                                }
+                            }
+                        }
+                    ],
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftSQLServer",
+                        "offer": "[variables('imageOffer')]",
+                        "sku": "[variables('sqlSku')]",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachineName')]",
+                    "adminUsername": "[variables('adminUsername')]",
+                    "adminPassword": "[variables('adminPassword')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVMAgent": true
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2022-03-01",
+            "name": "[concat(variables('virtualMachineName'), '/CustomScriptExtension')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
+            ],
+            "properties": {
+                "autoUpgradeMinorVersion": true,
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.9",
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/microsoft/SQL-Migration-AzureSQL-PoC/main/deploy/PostInstallation.ps1"
+                    ],
+                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File PostInstallation.ps1"
+                },
+
+                "protectedSettings": {}
+            }
+        },
+        {
+            "type": "Microsoft.SqlVirtualMachine/sqlVirtualMachines",
+            "apiVersion": "2021-11-01-preview",
+            "name": "[variables('virtualMachineName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "virtualMachineResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
+                "sqlManagement": "Full",
+                "sqlServerLicenseType": "PAYG",
+                "storageConfigurationSettings": {
+                    "diskConfigurationType": "[variables('diskConfigurationType')]",
+                    "storageWorkloadType": "[variables('storageWorkloadType')]",
+                    "sqlDataSettings": {
+                        "luns": "[variables('dataDisksLuns')]",
+                        "defaultFilePath": "[variables('dataPath')]"
+                    },
+                    "sqlLogSettings": {
+                        "luns": "[variables('logDisksLuns')]",
+                        "defaultFilePath": "[variables('logPath')]"
+                    },
+                    "sqlTempDbSettings": {
+                        "defaultFilePath": "[variables('tempDbPath')]"
+                    }
+                },
+                "serverConfigurationsManagementSettings": {
+                    "sqlConnectivityUpdateSettings": {
+                        "connectivityType": "PUBLIC",
+                        "port": 1433,
+                        "sqlAuthUpdateUserName": "[variables('adminUsername')]",
+                        "sqlAuthUpdatePassword": "[variables('adminPassword')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
+            ]
+        },
+        {
+            // SQL MI Resources
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('SQLMINetworkSecurityGroupName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "allow_tds_inbound",
+                        "properties": {
+                            "description": "Allow access to data",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "1433",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "allow_redirect_inbound",
+                        "properties": {
+                            "description": "Allow inbound redirect traffic to Managed Instance inside the virtual network",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "11000-11999",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "public_endpoint_inbound",
+                        "properties": {
+                            "description": "Allow public endpoint inbound traffic",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3342",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1300,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "deny_all_inbound",
+                        "properties": {
+                            "description": "Deny all other inbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 4096,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "deny_all_outbound",
+                        "properties": {
+                            "description": "Deny all other outbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 4096,
+                            "direction": "Outbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('SQLMIRouteTableName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "disableBgpRoutePropagation": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2021-08-01",
+            "name": "[variables('SQLMIVirtualNetworkName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('SQLMIAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('SQLMISubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('SQLMISubnetPrefix')]",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', variables('SQLMIRouteTableName'))]"
+                            },
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('SQLMINetworkSecurityGroupName'))]"
+                            },
+                            "delegations": [
+                                {
+                                    "name": "managedInstanceDelegation",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Sql/managedInstances"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[variables('SQLMIManagementSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('SQLMIManagementSubnetPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('SQLMINetworkSecurityGroupName'))]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('SQLMINetworkSecurityGroupName'))]",
+                "[resourceId('Microsoft.Network/routeTables', variables('SQLMIRouteTableName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/managedInstances",
+            "apiVersion": "2022-05-01-preview",
+            "name": "[variables('SQLMIName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "[variables('SQLMIskuName')]"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "administratorLogin": "[variables('SQLMIAdministratorLogin')]",
+                "administratorLoginPassword": "[variables('SQLMIAdministratorLoginPassword')]",
+                "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('SQLMIVirtualNetworkName'), variables('SQLMISubnetName'))]",
+                "storageSizeInGB": "[variables('SQLMIStorageSizeInGB')]",
+                "vCores": "[variables('SQLMIvCores')]",
+                "licenseType": "[variables('SQLMILicenseType')]",
+                "publicDataEndpointEnabled": true,
+                "minimalTlsVersion": "1.2"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('SQLMIvirtualNetworkName'))]"
+            ]
+        },
+        // JUMP BOX
+        {
+            "name": "[variables('jbPublicIpAddressName')]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-06-01",
+            "location": "[variables('location')]",
+            "properties": {
+                "publicIpAllocationMethod": "Dynamic"
+            },
+            "sku": {
+                "name": "Basic"
+            }
+        },
+        {
+            "name": "[variables('jbNetworkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-06-01",
+            "location": "[variables('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "RDP",
+                        "properties": {
+                            "priority": 300,
+                            "protocol": "Tcp",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('jbVirtualNetworksName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[variables('jbNetworkSecurityGroupName')]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.2.0.0/16"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": []
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.2.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('jbNetworkSecurityGroupName'))]"
+                            },
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false
+            }
+        },
+        // Vnet Peering
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "name": "[concat(variables('jbVirtualNetworksName'),'/peeringTo', variables('SQLMIVirtualNetworkName') )]",
+            "dependsOn": [
+                "[variables('jbVirtualNetworksName')]",
+                "[variables('SQLMIVirtualNetworkName')]"
+            ],
+            "apiVersion": "2022-01-01",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('SQLMIVirtualNetworkName'))]"
+                },
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "[variables('SQLMIAddressPrefix')]"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "name": "[concat(variables('SQLMIVirtualNetworkName'),'/peeringTo',variables('jbVirtualNetworksName'))]",
+            "dependsOn": [
+                "[variables('SQLMIVirtualNetworkName')]",
+                "[variables('jbVirtualNetworksName')]"
+            ],
+            "apiVersion": "2022-01-01",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('jbVirtualNetworksName'))]"
+                },
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.2.0.0/16"
+                    ]
+                }
+            }
+        },
+         {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "name": "[concat(variables('jbVirtualNetworksName'),'/peeringTo', variables('virtualNetworksName') )]",
+            "dependsOn": [
+                "[variables('jbVirtualNetworksName')]",
+                "[variables('virtualNetworksName')]"
+            ],
+            "apiVersion": "2022-01-01",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName'))]"
+                },
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.1.0.0/16"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "name": "[concat(variables('virtualNetworksName'),'/peeringTo',variables('jbVirtualNetworksName'))]",
+            "dependsOn": [
+                "[variables('virtualNetworksName')]",
+                "[variables('jbVirtualNetworksName')]"
+            ],
+            "apiVersion": "2022-01-01",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('jbVirtualNetworksName'))]"
+                },
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.2.0.0/16"
+                    ]
+                }
+            }
+        },
+        //End Vnet Peering 
+        {
+            "name": "[variables('jbNetworkInterfaceName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-06-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[variables('jbVirtualNetworksName')]",
+                "[variables('jbPublicIpAddressName')]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('jbVirtualNetworksName'), 'default')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('jbPublicIpAddressName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('jbVirtualMachineName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-12-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[variables('JBNetworkInterfaceName')]"
+            ],
+            "properties": {
+                "osProfile": {
+                    "computerName": "[variables('JBVirtualMachineName')]",
+                    "adminUsername": "[variables('SQLMIAdministratorLogin')]",
+                    "adminPassword": "[variables('SQLMIAdministratorLoginPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVmAgent": "true"
+                    }
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_B2s"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsDesktop",
+                        "offer": "Windows-10",
+                        "sku": "win10-21h2-pro",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('JBNetworkInterfaceName'))]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2022-03-01",
+            "name": "[concat(variables('JBvirtualMachineName'), '/CustomScriptExtension')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('JBvirtualMachineName'))]"
+            ],
+            "properties": {
+                "autoUpgradeMinorVersion": true,
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.9",
+                "settings": {
+                    "fileUris": [
+                        "https://raw.githubusercontent.com/microsoft/SQL-Migration-AzureSQL-PoC/main/deploy/JumpboxPostInstallation.ps1"
+                    ],
+                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpboxPostInstallation.ps1"
+                },
+
+                "protectedSettings": {}
+            }
+        }
+        // END JUMP BOM
+    ],
+    "outputs": {
+    }
+}

@@ -1,14 +1,22 @@
-# Project
+# SQL Server migration one-click PoC to Azure SQL
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This one-click deployment allows you to deploy a Proof-of-Concept environment of Azure SQL VM migration to Azure SQL with encapsulated best practices and step-by-step execution steps that will enable you to test, adjust and fully deploy the automated solution at scale.
+This approach can help with large-scale migrations for specific workload use cases.
 
-As the maintainer of this project, please make a few updates:
+## One-click PoC
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Take advantage of this one-click SQL Migration PoC to accelerate your migration to Azure SQL.
+
+|Migration Scenario                         | One-Click PoC  |
+|---------                                  | ---------      |
+| SQL Server to Azure SQL Managed Instance  | [![One-click PoC to Azure SQL MI](./media/Azure-DevOps.svg)](./AzureSQLMI/deploy/README.md) [One-click PoC to Azure SQL MI](./AzureSQLMI/deploy/README.md)         |
+| SQL Server to Azure SQL Database          | [![One-click PoC to Azure SQL DB](./media/Azure-DevOps.svg)](./AzureSQLDB/deploy/README.md) [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)         |
+
+## Prerequisites
+
+- You need to have at least an owner role or contributor role for the Azure subscription. A separate resource group should be created and delegated roles necessary for this proof of concept.
+- Check this documentation for [RBAC role-assignments](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps).
+- Make sure that the Microsoft.DataMigration [resource provider is registered in your subscription.](https://learn.microsoft.com/en-us/azure/dms/quickstart-create-data-migration-service-portal#register-the-resource-provider)
 
 ## Contributing
 
