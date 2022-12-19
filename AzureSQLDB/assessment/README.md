@@ -49,7 +49,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     ```powershell
     az datamigration get-assessment `
-    --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My$upp3r$ecret" `
+    --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
     --overwrite
     ```

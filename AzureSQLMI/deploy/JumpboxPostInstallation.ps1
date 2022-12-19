@@ -1,3 +1,6 @@
+# Install Chocolatey 
+Start-Transcript -Path C:\psLogs.txt -Append
+
 Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 # Install Software
 Write-Host "Installing Azure Data Studio"
@@ -32,3 +35,5 @@ $localTargetDirectory = "C:\tem\output"
 
 #Create Folders
 CreateFolder $localTargetDirectory
+
+Stop-Transcript

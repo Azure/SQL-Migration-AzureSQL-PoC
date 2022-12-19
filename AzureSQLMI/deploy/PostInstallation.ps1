@@ -1,4 +1,12 @@
+# Install Chocolatey 
+Start-Transcript -Path C:\psLogs.txt -Append
 Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+#Install Software
+Write-Host "Installing Azure Data Studio"
+choco install azure-data-studio -y
+choco install azure-cli -y
+choco install dotnetcore -y
 
 # Function to create folders
 function CreateFolder {
@@ -19,20 +27,6 @@ function CreateFolder {
     
 }
 
-#Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201
-if (-not(Get-InstalledModule Az.Storage -ErrorAction silentlycontinue)) {
-    Write-Host "Module does not exist"
-    Write-Host "Installing NuGet"
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    Write-Host "NuGet Installed"
-    Write-Host "Installing Az.Storage"
-    Install-Module Az.Storage -Force
-    Write-Host "Module installed successfully"
-}
-else {
-    Write-Host "Module exists"
-}
-
 #Download File
 $FileName1 = "AdventureWorks2019.bak"
 
@@ -47,11 +41,6 @@ Write-Host "Downloading file"
 $finalPath = $localTargetDirectory + "\" + $FileName1
 Invoke-WebRequest 'https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak' -OutFile $finalPath
 Write-Host "File downloaded"
-
-#Install Software
-Write-Host "Installing Azure Data Studio"
-choco install azure-data-studio -y
-choco install azure-cli -y
 
 # Define clear text string for username and password
 [string]$userName = 'sqladmin'
@@ -96,4 +85,4 @@ GO
 '@
 
 Invoke-Sqlcmd -Query $query -Username $userName -Password $userPassword -Database 'AdventureWorks_with_issues'
-Write-Host "Restore completed"
+Write-Host "Restore completed" 

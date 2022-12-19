@@ -18,7 +18,7 @@ In this section, you will provision all Azure resources required to complete thi
 
 ## Azure Resource Manager
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FSQL-Migration-AzureSQL-PoC%2Fmain%2FAzureSQLMI%2Fdeploy%2Ftemplate-latest.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](<https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FSQL-Migration-AzureSQL-PoC%2Fmain%2FAzureSQLMI%2Fdeploy%2Ftemplate-latest.json)
 
 The [ARM template (template-latest.json)](template-latest.json) is used to provision 24 Azure resources in a resource group.
 

@@ -85,4 +85,4 @@ GO
 '@
 
 Invoke-Sqlcmd -Query $query -Username $userName -Password $userPassword -Database 'AdventureWorks_with_issues'
-Write-Host "Restore completed"
+Write-Host "Restore completed" 
