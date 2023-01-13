@@ -130,7 +130,7 @@ Use the **az datamigration sql-managed-instance cutover** command to perform cut
 
 ```dotnetcli
 $migOpId = az datamigration sql-managed-instance show --managed-instance-name "<ManagedInstanceName>" --resource-group "<ResourceGroupName>" --target-db-name "AdventureWorks2019" --expand=MigrationStatusDetails --query "properties.migrationOperationId"
-        ```
+```
 
  2. Perform Cutover
 

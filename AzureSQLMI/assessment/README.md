@@ -25,19 +25,19 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
 
-    ```dotnetcli
+    ```PowerShell
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```dotnetcli
+    ```PowerShell
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```dotnetcli
+    ```PowerShell
     az account set --subscription <subscription-id>
     ```
 
@@ -45,8 +45,11 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 1. We can run a SQL server assessment using the ***az datamigration get-assessment*** command.
 
-    ```dotnetcli
-    az datamigration get-assessment --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My$upp3r$ecret" --output-folder "C:\temp\output" --overwrite
+    ```PowerShell
+    az datamigration get-assessment `
+    --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    --output-folder "C:\temp\output" `
+    --overwrite
     ```
 
 2. Assessment at scale using config file
@@ -67,7 +70,7 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
     The config file can be passed to the cmdlet in the following way
 
-    ```dotnetcli
+    ```PowerShell
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -84,8 +87,13 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
 1. Run a SQL server performance data collection using the ***az datamigration performance-data-collection*** command.
 
-    ```dotnetcli
-    az datamigration performance-data-collection --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My$upp3r$ecret" --output-folder "C:\temp\output" --perf-query-interval 10 --number-of-iteration 5 --static-query-interval 120
+    ```PowerShell
+    az datamigration performance-data-collection `
+    --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    --output-folder "C:\temp\output" `
+    --perf-query-interval 10 `
+    --number-of-iteration 5 `
+    --static-query-interval 120
     ```
 
     > [!TIP]
@@ -113,7 +121,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     The config file can be passed to the cmdlet in the following way.
 
-    ```dotnetcli
+    ```PowerShell
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -128,8 +136,12 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
-    ```dotnetcli
-    az datamigration get-sku-recommendation --output-folder "C:\temp\output" --display-result --overwrite --target-platform "AzureSqlManagedInstance"`
+    ```PowerShell
+    az datamigration get-sku-recommendation `
+    --output-folder "C:\temp\output" `
+    --display-result `
+    --overwrite `
+    --target-platform "AzureSqlManagedInstance"`
     ```
 
 2. Get SKU recommendations at scale using a config file.
