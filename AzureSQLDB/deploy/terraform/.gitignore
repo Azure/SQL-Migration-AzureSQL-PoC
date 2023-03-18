@@ -1,4 +1,6 @@
 .terraform
 .terraform*
 *.png
+*.
+*.tfstate*
 *.out
