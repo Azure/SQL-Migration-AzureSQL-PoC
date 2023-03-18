@@ -1,4 +1,4 @@
-suffix = "dvitale"
+suffix = "ocp"
 resource_group_name = "one-click-poc"
 resource_group_location = "westeurope"
 migration_service_name = "PoCMigrationService"

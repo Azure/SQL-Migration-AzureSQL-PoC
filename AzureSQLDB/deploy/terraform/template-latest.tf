@@ -49,7 +49,6 @@ resource "azurerm_mssql_database" "mssql_database" {
   name      = var.database_name
   server_id = azurerm_mssql_server.sqlserver.id
   collation = "SQL_Latin1_General_CP1_CI_AS"
-  //license_type = "LicenseIncluded"
   max_size_gb = 50
   read_scale  = false
   sku_name    = "S2"
@@ -121,14 +120,6 @@ resource "azurerm_virtual_network" "vnet" {
   }
 }
 
-# resource "azurerm_subnet" "subnet1" {
-#   name                      = var.subnet1_name
-#   resource_group_name       = azurerm_resource_group.rg.name
-#   virtual_network_name      = azurerm_virtual_network.vnet.name
-#   network_security_group_id = azurerm_network_security_group.nsg.id
-#   address_prefixes          = [var.subnet1_prefix]
-# }
-
 resource "azurerm_network_interface" "network_interface" {
   name                = "${var.sql_vm_name}-nic"
   location            = var.resource_group_location
@@ -142,8 +133,6 @@ resource "azurerm_network_interface" "network_interface" {
     private_ip_address            = "10.0.0.4"
   }
 }
-
-
 
 resource "azurerm_private_endpoint" "private_endpoint" {
   name                = var.private_endpoint_name
@@ -169,15 +158,12 @@ resource "azurerm_private_dns_zone" "pdz" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-
 resource "azurerm_private_dns_zone_virtual_network_link" "pdzvnlink" {
   name                  = "${azurerm_private_dns_zone.pdz.name}-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.pdz.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
-
-
 
 resource "azurerm_private_dns_zone_virtual_network_link" "jb_pdzvnlink" {
   name                  = "${var.jb_vnet_name}-link"
