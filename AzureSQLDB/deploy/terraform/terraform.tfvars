@@ -1,5 +1,4 @@
-suffix = "ocp"
-resource_group_name = "one-click-poc"
+resource_group_name = "rg-one-click-poc"
 resource_group_location = "westeurope"
 migration_service_name = "PoCMigrationService"
 sql_server_name = "sqldb"

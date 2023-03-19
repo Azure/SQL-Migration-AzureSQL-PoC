@@ -117,12 +117,11 @@ Prerequisites
     cd terraform
     ```
 
-4. Open the file [terraform.tfvars](terraform/terraform.tfvars) and provide values for the variables: `resource_group_name`, `resource_group_location` and `suffix`.
+4. Open the file [terraform.tfvars](terraform/terraform.tfvars) and provide values for the variables `resource_group_name` and `resource_group_location`
 
     e.g:
 
     ```
-    suffix = "ocp"
     resource_group_name = "one-click-poc"
     resource_group_location = "westeurope"
     ```
@@ -138,6 +137,15 @@ Prerequisites
     ```dotnetcli
     terraform apply -auto-approve
     ```
+
+    A message asking for input of a value for the variable `suffix` will be displayed
+    
+    ```dotnetcli
+    var.suffix
+        Enter a value: 
+    ```
+
+    Insert a value and press Enter.
 
 ## Azure Resources
 
