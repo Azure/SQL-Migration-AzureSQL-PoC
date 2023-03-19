@@ -6,11 +6,19 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~>2.0"
     }
+    azapi = {
+      source  = "azure/azapi"
+      version = "=1.4.0"
+    }
     random = {
       source  = "hashicorp/random"
       version = "~>3.0"
     }
   }
+}
+
+provider "azapi" {
+  default_location = var.resource_group_location
 }
 
 provider "azurerm" {
@@ -46,9 +54,9 @@ resource "azurerm_mssql_server" "sqlserver" {
 }
 
 resource "azurerm_mssql_database" "mssql_database" {
-  name      = var.database_name
-  server_id = azurerm_mssql_server.sqlserver.id
-  collation = "SQL_Latin1_General_CP1_CI_AS"
+  name        = var.database_name
+  server_id   = azurerm_mssql_server.sqlserver.id
+  collation   = "SQL_Latin1_General_CP1_CI_AS"
   max_size_gb = 50
   read_scale  = false
   sku_name    = "S2"
@@ -65,12 +73,11 @@ resource "azurerm_public_ip" "publicip" {
   sku                 = var.public_ip_address_sku
 }
 
-resource "azurerm_database_migration_service" "dms" {
-  name                = var.migration_service_name
-  location            = var.resource_group_location
-  resource_group_name = azurerm_resource_group.rg.name
-  subnet_id           = "${azurerm_virtual_network.vnet.id}/subnets/${var.subnet1_name}"
-  sku_name            = "Standard_1vCores"
+resource "azapi_resource" "dms" {
+  type = "Microsoft.DataMigration/sqlMigrationServices@2022-03-30-preview"
+  name = var.migration_service_name
+  location = azurerm_resource_group.rg.location
+  parent_id = azurerm_resource_group.rg.id
 }
 
 resource "azurerm_network_security_group" "nsg" {
@@ -247,7 +254,7 @@ resource "azurerm_virtual_machine" "vm" {
   }
 
   storage_os_disk {
-    name = "osdisk001"
+    name              = "osdisk001"
     managed_disk_type = "Premium_LRS"
     create_option     = "FromImage"
   }
@@ -275,10 +282,10 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
 
   timeouts {
-    create="60m"
-    update="60m"
-    delete="60m"
-    read = "60m"   
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+    read   = "60m"
   }
 }
 
@@ -296,11 +303,11 @@ resource "azurerm_virtual_machine_extension" "jb_vm_extension" {
     }
   SETTINGS
 
-   timeouts {
-    create="60m"
-    update="60m"
-    delete="60m"
-    read = "60m"   
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+    read   = "60m"
   }
 }
 
