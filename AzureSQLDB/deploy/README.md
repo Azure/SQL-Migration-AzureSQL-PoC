@@ -111,10 +111,10 @@ Prerequisites
     az account list-locations -o table
     ```
 
-3. Move to the terraform subfolder
+3. Move to the folder [AzureSQLDB/deploy/terraform](AzureSQLDB/deploy/terraform)
 
     ```dotnetcli
-    cd terraform
+    cd AzureSQLDB/deploy/terraform
     ```
 
 4. Open the file [terraform.tfvars](terraform/terraform.tfvars) and provide values for the variables `resource_group_name` and `resource_group_location`
