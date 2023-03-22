@@ -84,7 +84,69 @@ The [Bicep template (template-latest.bicep)](template-latest.bicep) is used to p
 
 ## Terraform
 
-Stay tuned. It's coming soon!
+The [Terraform template (terraform/template-latest.tf)](terraform/template-latest.bicep) is used to provision 23 Azure resources in a  resource group.
+
+ [Learn more about Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/overview).
+
+Prerequisites
+
+- [Install Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure)
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+1. Run the following to log in from your client using your default web browser
+
+    ```dotnetcli
+    az login
+    ```
+
+    If you have more than one subscription, you can select a particular subscription.
+
+    ```dotnetcli
+    az account set --subscription <subscription-id>
+    ```
+
+2. Find a location you want to deploy the resource group
+  
+    ```dotnetcli
+    az account list-locations -o table
+    ```
+
+3. Move to the folder [AzureSQLMI/deploy/terraform](AzureSQLMI/deploy/terraform)
+
+    ```dotnetcli
+    cd AzureSQLMI/deploy/terraform
+    ```
+
+4. Open the file [terraform.tfvars](terraform/terraform.tfvars) and provide values for the variables `resource_group_name` and `resource_group_location`
+
+    e.g:
+
+    ```
+    resource_group_name = "one-click-poc"
+    resource_group_location = "westeurope"
+    ```
+
+5. Initialize a working directory for the terraform configuration
+
+    ```dotnetcli
+    terraform init
+    ```
+
+6. Deploy the terraform template
+
+    ```dotnetcli
+    terraform apply -auto-approve
+    ```
+
+    A message asking for input of a value for the variable `suffix` will be displayed
+    
+    ```dotnetcli
+    var.suffix
+        Enter a value: 
+    ```
+
+    Insert a value and press Enter.
+
 
 ## Azure Resources
 
