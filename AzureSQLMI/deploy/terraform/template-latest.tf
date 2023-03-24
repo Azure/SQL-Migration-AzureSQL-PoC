@@ -112,6 +112,8 @@ resource "azurerm_network_interface" "network_interface" {
   }
 }
 
+
+
 resource "azurerm_managed_disk" "data_disk" {
   count                = local.total_disk_count
   name                 = "${var.sql_vm_name}-disk-${count.index}"
@@ -320,12 +322,25 @@ resource "azurerm_sql_managed_instance" "sql_mi" {
   public_data_endpoint_enabled = true
   minimum_tls_version          = "1.2"
 
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+
+
+
   timeouts {
     create = "60m"
     update = "60m"
     delete = "60m"
     read   = "60m"
   }
+
+  depends_on = [
+    azurerm_virtual_network.sql_mi_vnet
+  ]
+
 }
 
 resource "azurerm_mssql_virtual_machine" "sql_vm" {
@@ -370,6 +385,10 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
     delete = "60m"
     read   = "60m"
   }
+
+  depends_on = [
+    azurerm_mssql_virtual_machine.sql_vm
+  ]
 }
 
 # resource "azurerm_mssql_server" "sqlserver" {
@@ -458,6 +477,9 @@ resource "azurerm_virtual_network" "jb_vnet" {
     security_group = azurerm_network_security_group.jb_nsg.id
   }
 }
+
+
+
 resource "azurerm_public_ip" "jp_publicip" {
   name                = var.jb_ip_address_name
   resource_group_name = azurerm_resource_group.rg.name
