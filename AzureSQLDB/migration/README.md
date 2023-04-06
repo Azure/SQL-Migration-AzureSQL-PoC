@@ -51,7 +51,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     ```powershell
     $AuthKey = az datamigration sql-service list-auth-key `
     --resource-group "<resource group name>" `
-    --sql-migration-service-name "PoCMigrationService" 
+    --sql-migration-service-name "PoCMigrationService" ` 
     --query "authKey1"
     ```
 
@@ -160,7 +160,7 @@ You can also migrate the database schema from source to target using the [SQL Da
     --source-sql-connection authentication="SqlAuthentication" data-source="10.0.0.4" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=true user-name="sqladmin" `
     --target-sql-connection authentication="SqlAuthentication" data-source="sqlservercsapocmigration.database.windows.net" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=true user-name="sqladmin" `
     --resource-group "oneclickpoc" `
-    --sqldb-instance-name "sqlservercsapocmigration.database.windows.net" `
+    --sqldb-instance-name "sqlservercsapocmigration" `
     --target-db-name "AdventureWorks2019"
     ```
 

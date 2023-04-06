@@ -71,7 +71,7 @@ Start-Process -filePath "C:\Program Files\Azure Data Studio\bin\azuredatastudio"
 Start-Process -filePath "C:\Program Files\Azure Data Studio\bin\azuredatastudio" -ArgumentList @("--install-extension microsoft.sql-migration","--force")
 # Downaloading and installig Integration Runtime
 Write-Host "Downloading Integration Runtime"
-Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.23.8324.1.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.23.8324.1.msi; 
+Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.28.8473.1.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.23.8324.1.msi; 
 Write-Host "Installing Integration Runtime"
 Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.23.8324.1.msi /quiet';
 
