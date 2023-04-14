@@ -31,7 +31,7 @@ function CreateFolder {
 }
 
 #Destination Path
-$localTargetDirectory = "C:\tem\output"
+$localTargetDirectory = "C:\temp\output"
 
 #Create Folders
 CreateFolder $localTargetDirectory
