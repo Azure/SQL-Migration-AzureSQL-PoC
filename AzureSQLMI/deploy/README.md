@@ -20,7 +20,7 @@ In this section, you will provision all Azure resources required to complete thi
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FSQL-Migration-AzureSQL-PoC%2Fmain%2FAzureSQLMI%2Fdeploy%2Ftemplate-latest.json)
 
-The [ARM template (template-latest.json)](template-latest.json) is used to provision 24 Azure resources in a resource group.
+The [ARM template (template-latest.json)](arm/template-latest.json) is used to provision 24 Azure resources in a resource group.
 
 Right-click or `Ctrl + click` the button below to open the Azure Portal in a new window. This will redirect you to the Custom Deployment wizard in the Azure Portal.
 
@@ -28,7 +28,7 @@ Select the Azure subscription and the resource group that you would like to use 
 
 ## Bicep
 
-The [Bicep template (template-latest.bicep)](template-latest.bicep) is used to provision 24 Azure resources in a  resource group.
+The [Bicep template (template-latest.bicep)](bicep/template-latest.bicep) is used to provision 24 Azure resources in a  resource group.
 
  [Learn more about bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
@@ -84,7 +84,7 @@ The [Bicep template (template-latest.bicep)](template-latest.bicep) is used to p
 
 ## Terraform
 
-The [Terraform template (terraform/template-latest.tf)](terraform/template-latest.bicep) is used to provision 23 Azure resources in a  resource group.
+The [Terraform template (terraform/template-latest.tf)](terraform/template-latest.tf) is used to provision Azure resources in a  resource group.
 
  [Learn more about Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/overview).
 

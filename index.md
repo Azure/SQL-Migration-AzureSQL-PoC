@@ -9,5 +9,15 @@
   
 3. [One-click PoC to Azure SQL MI](./AzureSQLDB/deploy/README.md)
    - [Assessment and SKU recommendation for Azure SQL Managed Instance](./AzureSQLMI/assessment/README.md)
-   - [Offline migration for Azure SQL Managed Instance](./AzureSQLMI/migration/offline.md)
-   - [Online migration for Azure SQL Managed Instance](./AzureSQLMI/migration/online.md)
+   - [Offline migration for Azure SQL Managed Instance - Using storage accont](./AzureSQLMI/migration/offline.md)
+   - [Online migration for Azure SQL Managed Instance - Using storage account](./AzureSQLMI/migration/online.md)
+
+
+
+|Migration Scenario  | Platform Destination  | Scripting language  |
+|---------|---------|---------|
+|[Assessment and SKU recommendation](./AzureSQLMI/assessment/README.md)    |     Azure SQL MI    |  CLI / PowerShell |
+|[Offline migration - Using storage accont](./AzureSQLMI/migration/offline.md)     |    Azure SQL MI    |  CLI / PowerShell |
+|[Online migration - Using storage account](./AzureSQLMI/migration/online.md)     |     Azure SQL MI    |  CLI / PowerShell |
+|[Offline migration - Using file share](./AzureSQLMI/migration/offline.md)     |    Azure SQL MI    |  CLI / PowerShell |
+|[Online migration - Using file share](./AzureSQLMI/migration/online.md)     |     Azure SQL MI    |  CLI / PowerShell |
