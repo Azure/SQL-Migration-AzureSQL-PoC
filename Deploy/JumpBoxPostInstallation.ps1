@@ -20,15 +20,16 @@ catch {
 
 try {
     # Install dotnet 
+    Write-Host "Installing DotNet Core"
+    choco install dotnetcore -y
+    Write-Host "dotnetcore was installed successfully"
     Write-Host "Installing Dotnet 6"
     choco install dotnet-6.0-sdk -y
     Write-Host "dotnet-6.0-sdk was installed successfully"
     Write-Host "Installing Dotnet 7 runtime"
     choco install dotnet-runtime -y
     Write-Host "dotnet-runtime was installed successfully"
-    Write-Host "Installing DotNet Core"
-    choco install dotnetcore -y
-    Write-Host "dotnetcore was installed successfully"
+
 }
 catch {
     Write-Host "Error to installing dotnet"
@@ -103,18 +104,17 @@ catch {
     Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;'"
 }
 
-
+# Installing SqlPackage
+Write-Host "Installing SqlPackage"
 try {
-    # Installing SqlPackage
-    Write-Host "Installing SqlPackage"
+    
     dotnet tool install -g microsoft.sqlpackage
-    Write-Host "SqlPackage was installed successfully"
     dotnet tool list -g 
 }
 catch {
     Write-Host "Error to install SqlPackage" -ErrorAction Stop
 }
-
+Write-Host "SqlPackage was installed successfully"
 try {
     $env:Path += "C:\Windows\System32\config\systemprofile\.dotnet\tools;"
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
