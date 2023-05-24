@@ -172,7 +172,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-htlm](/media/sqldb-sku-recommendation-htlm.png)
+    ![sku-recommendation-html](/media/sqldb-sku-recommendation-html.png)
 
 ## Page Navigator
 

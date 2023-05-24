@@ -130,7 +130,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     All results will be displayed after the command finishes.
 
-    ![sku-recommendation](../../media/sku-recommendation.png)
+    ![sku-recommendation](../../../media/sqldb-sku-recommendation-ps.png)
 
 2. Get SKU recommendations at scale using a config file.
 
@@ -153,7 +153,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-htlm](../../media/sku-recommendation-htlm.png)
+    ![sku-recommendation-html](../../../media/sqldb-sku-recommendation-html.png)
 
 ## Page Navigator
 

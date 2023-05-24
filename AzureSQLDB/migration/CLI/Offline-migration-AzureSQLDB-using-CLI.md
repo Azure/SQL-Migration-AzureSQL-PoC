@@ -110,6 +110,11 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     /SourceTrustServerCertificate:true
     ```
 
+    > [!WARNING]
+    > If you receive an error message, run the following command and re-run the command above.
+    >
+    > `dotnet tool install -g microsoft.sqlpackage`
+
 - **Publish metadata**
 
     Use the **SqlPackage /Action:Publish** command to publish metadata to your Azure SQL database

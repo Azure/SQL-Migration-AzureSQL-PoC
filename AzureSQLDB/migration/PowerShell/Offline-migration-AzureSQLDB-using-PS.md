@@ -31,7 +31,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     If you have more than one subscription, you can select a particular subscription.
 
     ```powershell
-    az account set --subscription <subscription-id>
+    Set-AzContext -SubscriptionId <subscription-id>
     ```
 
     The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure.
@@ -103,6 +103,11 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     /SourcePassword:"My`$upp3r`$ecret" `
     /SourceTrustServerCertificate:true
     ```
+
+    > [!WARNING]
+    > If you receive an error message, run the following command and re-run the command above.
+    >
+    > `dotnet tool install -g microsoft.sqlpackage`
 
 - **Publish metadata**
 
