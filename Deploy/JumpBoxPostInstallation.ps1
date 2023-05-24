@@ -53,6 +53,11 @@ CreateFolder $OutputTargetDirectory
 CreateFolder $ProjectsTargetDirectory
 CreateFolder $SHIRTargetDirectory
 
+# Installing SqlPackage
+Write-Host "Installing SqlPackage"
+dotnet tool install -g microsoft.sqlpackage
+Write-Host "SqlPackage was installed successfully"
+
 Write-Host "Setting variable"
 $env:Path += "C:\Program Files\dotnet;"
 [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
@@ -61,13 +66,13 @@ $env:Path += "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;"
 [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
 refreshenv
 
-# Installing SqlPackage
-Write-Host "Installing SqlPackage"
-dotnet tool install -g microsoft.sqlpackage
-
 $env:Path += "C:\Windows\System32\config\systemprofile\.dotnet\tools;"
 [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
 refreshenv
+
+#Printing Env variables
+Write-Host "Printing Env variables"
+Get-ChildItem -Path Env: | format-list
 
 # Installig Azure SQL migration extension for Azure Data Studio
 Write-Host "Installig Azure SQL migration extension"

@@ -153,7 +153,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-htlm]()
+    ![sku-recommendation-html]()
 
 ## Page Navigator
 
