@@ -1,8 +1,8 @@
-[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Database
+[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Managed Instance using PowerShell
 
-# Assessment and SKU recommendation for Azure SQL Database using PowerShell
+# Assessment and SKU recommendation for Azure SQL Managed Instance using PowerShell
 
-Assess your SQL Server databases for Azure SQL Database readiness or to identify any migration blockers before migrating them to Azure SQL Database.
+Assess your SQL Server databases for Azure SQL Managed Instance readiness or identify any migration blockers before migrating them to Azure SQL Managed Instance.
 
 The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure SQL.
 
@@ -30,14 +30,14 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     ```powershell
     Get-AzDataMigrationAssessment `
-    -ConnectionString "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    -ConnectionString "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     -OutputFolder "C:\temp\output" `
     -Overwrite
     ```
 
 2. **Assessment at scale** using config file
 
-    You can also create a config file to use as a parameter to run assessment on SQL servers.The config file has the following structure:
+    You can also create a config file to use as a parameter to run assessment on SQL servers. The config file has the following structure:
 
     ```json
     {
@@ -66,13 +66,13 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 ### Performance data collection
 
-This step is optional. An Azure SQL DB has been already provisioned.
+This step is optional. An Azure SQL Managed Instance has been already provisioned.
 
 1. Run a SQL Server performance data collection using the ***Get-AzDataMigrationPerformanceDataCollection*** command.
 
     ```powershell
     Get-AzDataMigrationPerformanceDataCollection `
-    -SqlConnectionStrings "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    -SqlConnectionStrings "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     -OutputFolder "C:\temp\output" `
     -PerfQueryInterval 10 `
     -NumberOfIterations 5 `
@@ -116,7 +116,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 ### Get SKU Recommendation
 
-This step is optional. An Azure SQL DB has been already provisioned.
+This step is optional. An Azure SQL Managed Instance has been already provisioned.
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
@@ -125,7 +125,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     -OutputFolder "C:\temp\output" `
     -DisplayResult `
     -Overwrite `
-    -TargetPlatform "AzureSqlDatabase"
+    -TargetPlatform "AzureSqlManagedInstance"
     ```
 
     All results will be displayed after the command finishes.

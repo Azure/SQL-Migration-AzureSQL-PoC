@@ -1,6 +1,6 @@
-[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Database
+[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Database using PowerShell
 
-# Assessment and SKU recommendation for Azure SQL Database using CLI
+# Assessment and SKU recommendation for Azure SQL Database using PowerShell
 
 Assess your SQL Server databases for Azure SQL Database readiness or to identify any migration blockers before migrating them to Azure SQL Database.
 
@@ -12,8 +12,7 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 - SQL Server with Windows authentication or SQL authentication access
 - .Net Core 3.1 (Already installed)
-- Azure CLI (Already installed)
-- Az datamigration extension
+- Az.DataMigration PowerShell module
 
 Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
@@ -25,33 +24,15 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
-1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
-
-    ```azurecli
-    az extension add --name datamigration
-    ```
-
-2. Run the following to log in from your client using your default web browser
-
-    ```powershell
-    az login
-    ```
-
-    If you have more than one subscription, you can select a particular subscription.
-
-    ```powershell
-    az account set --subscription <subscription-id>
-    ```
-
 ## Run the assessment
 
-1. Run a SQL Server assessment using the ***az datamigration get-assessment*** command.
+1. Run a SQL Server assessment using the ***Get-AzDataMigrationAssessment*** command.
 
     ```powershell
-    az datamigration get-assessment `
-    --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
-    --output-folder "C:\temp\output" `
-    --overwrite
+    Get-AzDataMigrationAssessment `
+    -ConnectionString "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    -OutputFolder "C:\temp\output" `
+    -Overwrite
     ```
 
 2. **Assessment at scale** using config file
@@ -73,13 +54,13 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     The config file can be passed to the cmdlet in the following way
 
     ```powershell
-    az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
+    Get-AzDataMigrationAssessment -ConfigFilePath "C:\Users\user\document\config.json"
     ```
 
     > [!TIP]
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
-    Learn more about using [CLI to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
+    Learn more about using [PowerShell to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-assessment.md)
 
 ## SKU Recommendation
 
@@ -87,15 +68,15 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 This step is optional. An Azure SQL DB has been already provisioned.
 
-1. Run a SQL Server performance data collection using the ***az datamigration performance-data-collection*** command.
+1. Run a SQL Server performance data collection using the ***Get-AzDataMigrationPerformanceDataCollection*** command.
 
     ```powershell
-    az datamigration performance-data-collection `
-    --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
-    --output-folder "C:\temp\output" `
-    --perf-query-interval 10 `
-    --number-of-iteration 5 `
-    --static-query-interval 120
+    Get-AzDataMigrationPerformanceDataCollection `
+    -SqlConnectionStrings "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
+    -OutputFolder "C:\temp\output" `
+    -PerfQueryInterval 10 `
+    -NumberOfIterations 5 `
+    -StaticQueryInterval 120
     ```
 
     > [!TIP]
@@ -124,14 +105,14 @@ This step is optional. An Azure SQL DB has been already provisioned.
     The config file can be passed to the cmdlet in the following way.
 
     ```powershell
-    az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
+    Get-AzDataMigrationAssessment -ConfigFilePath "C:\Users\user\document\config.json" 
     ```
 
     > [!TIP]
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
-    Learn more about using [CLI to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md)
+    Learn more about using [PowerShell to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-sku-recommendation.md)
 
 ### Get SKU Recommendation
 
@@ -140,11 +121,11 @@ This step is optional. An Azure SQL DB has been already provisioned.
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
     ```powershell
-    az datamigration get-sku-recommendation `
-    --output-folder "C:\temp\output" `
-    --display-result `
-    --overwrite `
-    --target-platform "AzureSqlDatabase"
+    Get-AzDataMigrationSkuRecommendation `
+    -OutputFolder "C:\temp\output" `
+    -DisplayResult `
+    -Overwrite `
+    -TargetPlatform "AzureSqlDatabase"
     ```
 
     All results will be displayed after the command finishes.
@@ -166,7 +147,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     }
     ```
 
-    Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
+    Learn more about using [PowerShell to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
 
 3. HTML recommendations result
 

@@ -1,6 +1,6 @@
-[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Managed Instance
+[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Managed Instance using CLI
 
-# Assessment and SKU recommendation for Azure SQL Managed Instance
+# Assessment and SKU recommendation for Azure SQL Managed Instance using CLI
 
 Assess your SQL Server databases for Azure SQL Managed Instance readiness or identify any migration blockers before migrating them to Azure SQL Managed Instance.
 
@@ -11,9 +11,11 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 ## Prerequisites
 
 - SQL Server with Windows authentication or SQL authentication access
-- .Net Core 3.1 (Already installed in the Jumpbox VM)
-- Azure CLI (Already installed in the Jumpbox VM)
+- .Net Core 3.1 (Already installed)
+- Azure CLI (Already installed)
 - Az datamigration extension
+
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
 ## Getting Started
 
@@ -25,36 +27,36 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
 
-    ```PowerShell
+    ```powershell
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```PowerShell
+    ```powershell
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```PowerShell
+    ```powershell
     az account set --subscription <subscription-id>
     ```
 
 ## Run the assessment
 
-1. We can run a SQL server assessment using the ***az datamigration get-assessment*** command.
+1. Run a SQL Server assessment using the ***az datamigration get-assessment*** command.
 
-    ```PowerShell
+    ```powershell
     az datamigration get-assessment `
     --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
     --overwrite
     ```
 
-2. Assessment at scale using config file
+2. **Assessment at scale** using config file
 
-    You can also create a config file to use as a parameter to run assessments on SQL servers. The config file has the following structure:
+    You can also create a config file to use as a parameter to run assessment on SQL servers. The config file has the following structure:
 
     ```json
     {
@@ -70,14 +72,14 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
     The config file can be passed to the cmdlet in the following way
 
-    ```PowerShell
+    ```powershell
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
     > [!TIP]
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
-    Learn more about using [CLI to assess sql server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
+    Learn more about using [CLI to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
 
 ## SKU Recommendation
 
@@ -85,9 +87,9 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 This step is optional. An Azure SQL Managed Instance has been already provisioned.
 
-1. Run a SQL server performance data collection using the ***az datamigration performance-data-collection*** command.
+1. Run a SQL Server performance data collection using the ***az datamigration performance-data-collection*** command.
 
-    ```PowerShell
+    ```powershell
     az datamigration performance-data-collection `
     --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -98,9 +100,9 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     > [!TIP]
     > Collect as much data as you want, then stop the process.
-    > To view the report, go to **C:\temp\output** folder and check the report file.
+    > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
-2. Running **performance data collection at scale** using config file
+2. Running **performance data collection at scale** using a config file
 
     You can also create a config file to use as a parameter to run performance data collection on SQL servers.
     The config file has the following structure:
@@ -121,14 +123,15 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     The config file can be passed to the cmdlet in the following way.
 
-    ```PowerShell
+    ```powershell
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
     > [!TIP]
-    > You can look into the output folder to find a CSV file that also gives the details of the performance data collected.
+    > Collect as much data as you want, then stop the process.
+    > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
-    Learn more about using [CLI to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#performance-data-collection-using-connection-string)
+    Learn more about using [CLI to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md)
 
 ### Get SKU Recommendation
 
@@ -136,7 +139,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
-    ```PowerShell
+    ```powershell
     az datamigration get-sku-recommendation `
     --output-folder "C:\temp\output" `
     --display-result `
@@ -144,9 +147,13 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
     --target-platform "AzureSqlManagedInstance"`
     ```
 
+    All results will be displayed after the command finishes.
+
+    ![sku-recommendation](media/sku-recommendation.png)
+
 2. Get SKU recommendations at scale using a config file.
 
-    We can also create a config file to use as a parameter to get SKU recommendations on SQL servers. The config file has the following structure:
+    You can also create a config file to use as a parameter to get SKU recommendations on SQL servers. The config file has the following structure:
 
     ```json
     {
@@ -159,10 +166,13 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
     }
     ```
 
-    > [!TIP]
-    > You can look into the output folder to find an HTML file that also gives the details of the SKU being recommended.
+    Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
 
-    Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#performance-data-collection-using-connection-string)
+3. HTML recommendations result
+
+    > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
+
+    ![sku-recommendation-htlm](../../media/sku-recommendation-htlm.png)
 
 ## Page Navigator
 

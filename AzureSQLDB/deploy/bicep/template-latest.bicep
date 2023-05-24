@@ -463,7 +463,7 @@ resource jbVirtualMachineName 'Microsoft.Compute/virtualMachines@2019-12-01' = {
       }
     }
     hardwareProfile: {
-      vmSize: 'Standard_B2s'
+      vmSize: 'Standard_B4ms'
     }
     storageProfile: {
       osDisk: {

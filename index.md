@@ -4,8 +4,17 @@
 
 1. [SQL Server migration one-click PoC to Azure SQL](README.md)
 2. [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)
-   - [Assessment and SKU recommendation for Azure SQL Database](./AzureSQLDB/assessment/README.md)
+   - [Assessment and SKU recommendation for Azure SQL Database using CLI](./AzureSQLDB/assessment/CLI/Assessment-SKU-AzureSQLDB-using-CLI.md)
+   - [Assessment and SKU recommendation for Azure SQL Database using PowerShell](./AzureSQLDB/assessment/CLI/Assessment-SKU-AzureSQLDB-using-CLI.md)
    - [Offline migration for Azure SQL Database](./AzureSQLDB/migration/README.md)
+
+2. [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)
+   - ***Assessment and SKU recommendation for Azure SQL Database***
+     - [CLI](./AzureSQLDB/assessment/CLI/Assessment-SKU-AzureSQLDB-using-CLI.md)
+     - [PowerShell](./AzureSQLDB/assessment/CLI/Assessment-SKU-AzureSQLDB-using-CLI.md)
+   - ***Offline migration for Azure SQL Database***
+     - [CLI](./AzureSQLDB/migration/CLI/Offline-migration-AzureSQLDB-using-CLI.md)
+     - [PowerShell](/AzureSQLDB/assessment/PowerShell/Assessment-SKU-AzureSQLDB-using-PS.md)
   
 3. [One-click PoC to Azure SQL MI](./AzureSQLDB/deploy/README.md)
    - [Assessment and SKU recommendation for Azure SQL Managed Instance](./AzureSQLMI/assessment/README.md)

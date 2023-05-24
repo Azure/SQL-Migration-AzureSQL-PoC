@@ -1,6 +1,6 @@
-[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Offline migration for Azure SQL Database using CLI
+[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Offline migration for Azure SQL Database using PowerShell
 
-# Offline migration for Azure SQL Database
+# Offline migration for Azure SQL Database using PowerShell
 
 Perform offline migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
 
@@ -266,7 +266,7 @@ Use the **Get-AzDataMigrationToSqlDb** command to monitor migration.
 
 You can also use the Azure Portal to monitor migration.
 
-![migration succeeded.](../../media/migration-succeeded.png)
+![migration succeeded](/media/sqldb-migration-succeeded.png)
 
 ## Migrating at scale
 
