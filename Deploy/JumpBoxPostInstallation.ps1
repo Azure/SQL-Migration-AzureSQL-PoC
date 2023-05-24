@@ -106,10 +106,10 @@ catch {
 
 try {
     # Installing SqlPackage
-    refreshenv
     Write-Host "Installing SqlPackage"
     dotnet tool install -g microsoft.sqlpackage
-    Write-Host "SqlPackage was installed successfully" 
+    Write-Host "SqlPackage was installed successfully"
+    dotnet tool list -g 
 }
 catch {
     Write-Host "Error to install SqlPackage" -ErrorAction Stop
