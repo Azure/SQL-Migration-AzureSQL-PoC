@@ -25,11 +25,15 @@ try {
     Write-Host "dotnetcore was installed successfully"
     Write-Host "Installing Dotnet 7"
     choco install dotnet-7.0-sdk -y
-    Write-Host "dotnet-6.0-sdk was installed successfully"
+    Write-Host "dotnet-7.0-sdk was installed successfully"
     Write-Host "Installing Dotnet 7 runtime"
     choco install dotnet-runtime -y
     Write-Host "dotnet-runtime was installed successfully"
 
+    Write-Host "Setting variable"
+    $env:Path += "C:\Program Files\dotnet;"
+    [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
+    refreshenv
 }
 catch {
     Write-Host "Error to installing dotnet"
@@ -43,9 +47,14 @@ catch {
     Write-Host "Installing Azure CLI"
     choco install azure-cli -y
     Write-Host "Azure CLI was installed successfully"
+
+    $env:Path += "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;"
+    [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
+    refreshenv   
 }
 catch {
     Write-Host "Error to install Azure Data Studio or Azure CLI"
+    Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;'"
 }
 
 try {
@@ -88,32 +97,33 @@ $SHIRTargetDirectory = "C:\temp\SHIR"
 CreateFolder $OutputTargetDirectory
 CreateFolder $ProjectsTargetDirectory
 CreateFolder $SHIRTargetDirectory
+Write-Host "Folders were created successfully"
 
-
-try {
-    Write-Host "Setting variable"
-    $env:Path += "C:\Program Files\dotnet;"
-    [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
-    refreshenv
-    $env:Path += "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;"
-    [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
-    refreshenv      
-}
-catch {
-    
-    Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;'"
-}
-
-# Installing SqlPackage
+# Installing SqlPackage - This is not working!
 Write-Host "Installing SqlPackage"
 try {
-    
+    Set-Location "C:\Program Files\dotnet"
     dotnet tool install -g microsoft.sqlpackage
-    dotnet tool list -g 
 }
 catch {
     Write-Host "Error to install SqlPackage" -ErrorAction Stop
 }
+Write-Host "Installing SqlPackage throug msi"
+try {
+    Invoke-WebRequest -Uri https://aka.ms/dacfx-msi -OutFile C:\temp\DacFramework.msi; 
+    Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\DacFramework.msi /quiet'; 
+    $env:Path += "C:\Program Files\Microsoft SQL Server\160\DAC\bin;"
+    [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
+    refreshenv
+}
+catch {
+    Write-Host "Error to install SqlPackage" -ErrorAction Stop
+}
+
+
+
+
+
 Write-Host "SqlPackage was installed successfully"
 try {
     $env:Path += "C:\Windows\System32\config\systemprofile\.dotnet\tools;"
