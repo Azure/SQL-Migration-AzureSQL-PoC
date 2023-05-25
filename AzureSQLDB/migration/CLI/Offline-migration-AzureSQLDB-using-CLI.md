@@ -101,7 +101,7 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     SqlPackage /Action:Extract `
     /TargetFile:"C:\temp\projects\adventureworks2019.dacpac" `
     /p:ExtractAllTableData=false `
-    /p:ExtractReferencedServerScopedElements=false `
+    /p:ExtractReferencedServerScopedElements=true `
     /p:VerifyExtraction=true `
     /SourceServerName:"10.0.0.4" `
     /SourceDatabaseName:"AdventureWorks2019" `
