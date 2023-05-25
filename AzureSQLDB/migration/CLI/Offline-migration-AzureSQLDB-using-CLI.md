@@ -110,11 +110,6 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     /SourceTrustServerCertificate:true
     ```
 
-    > [!WARNING]
-    > If you receive an error message, run the following command and re-run the command above.
-    >
-    > `dotnet tool install -g microsoft.sqlpackage`
-
 - **Publish metadata**
 
     Use the **SqlPackage /Action:Publish** command to publish metadata to your Azure SQL database
@@ -148,8 +143,8 @@ You can also migrate the database schema from source to target using the [SQL Da
     --migration-service "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/sqlMigrationServices/PoCMigrationService" `
     --scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/servers/<azure sql db instance>" `
     --source-database-name "AdventureWorks2019" `
-    --source-sql-connection authentication="SqlAuthentication" data-source="10.0.0.4" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=false user-name="sqladmin" `
-    --target-sql-connection authentication="SqlAuthentication" data-source="<azure sq db instance>.database.windows.net" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=false user-name="sqladmin" `
+    --source-sql-connection authentication="SqlAuthentication" data-source="10.0.0.4" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=true user-name="sqladmin" `
+    --target-sql-connection authentication="SqlAuthentication" data-source="<azure sq db instance>.database.windows.net" encrypt-connection=true password="My`$upp3r`$ecret" trust-server-certificate=true user-name="sqladmin" `
     --resource-group "<resource group name>" `
     --sqldb-instance-name "<azure sql db instance>" `
     --target-db-name "AdventureWorks"

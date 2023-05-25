@@ -95,7 +95,7 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     SqlPackage /Action:Extract `
     /TargetFile:"C:\temp\projects\adventureworks2019.dacpac" `
     /p:ExtractAllTableData=false `
-    /p:ExtractReferencedServerScopedElements=false `
+    /p:ExtractReferencedServerScopedElements=true `
     /p:VerifyExtraction=true `
     /SourceServerName:"10.0.0.4" `
     /SourceDatabaseName:"AdventureWorks2019" `
@@ -103,11 +103,6 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     /SourcePassword:"My`$upp3r`$ecret" `
     /SourceTrustServerCertificate:true
     ```
-
-    > [!WARNING]
-    > If you receive an error message, run the following command and re-run the command above.
-    >
-    > `dotnet tool install -g microsoft.sqlpackage`
 
 - **Publish metadata**
 
