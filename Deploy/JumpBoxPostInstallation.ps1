@@ -23,8 +23,8 @@ try {
     Write-Host "Installing DotNet Core"
     choco install dotnetcore -y
     Write-Host "dotnetcore was installed successfully"
-    Write-Host "Installing Dotnet 6"
-    choco install dotnet-6.0-sdk -y
+    Write-Host "Installing Dotnet 7"
+    choco install dotnet-7.0-sdk -y
     Write-Host "dotnet-6.0-sdk was installed successfully"
     Write-Host "Installing Dotnet 7 runtime"
     choco install dotnet-runtime -y
