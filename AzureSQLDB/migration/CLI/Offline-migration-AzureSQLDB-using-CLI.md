@@ -51,7 +51,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     ```powershell
     $AuthKey = az datamigration sql-service list-auth-key `
     --resource-group "<resource group name>" `
-    --sql-migration-service-name "PoCMigrationService" ` 
+    --sql-migration-service-name "PoCMigrationService" `
     --query "authKey1"
     ```
 
