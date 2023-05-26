@@ -14,13 +14,13 @@ In this section, you will provision all Azure resources required to complete thi
 
 ## Deployment diagram
 
-![resource-visualizer](../media/resource-visualizer.png)
+![resource-visualizer](/media/sqlmi-resource-visualizer.png)
 
 ## Azure Resource Manager
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FSQL-Migration-AzureSQL-PoC%2Fmain%2FAzureSQLMI%2Fdeploy%2Ftemplate-latest.json)
 
-The [ARM template (template-latest.json)](arm/template-latest.json) is used to provision 24 Azure resources in a resource group.
+The [ARM template (template-latest.json)](arm/template-latest.json) is used to provision Azure resources in a resource group.
 
 Right-click or `Ctrl + click` the button below to open the Azure Portal in a new window. This will redirect you to the Custom Deployment wizard in the Azure Portal.
 
@@ -28,7 +28,7 @@ Select the Azure subscription and the resource group that you would like to use 
 
 ## Bicep
 
-The [Bicep template (template-latest.bicep)](bicep/template-latest.bicep) is used to provision 24 Azure resources in a  resource group.
+The [Bicep template (template-latest.bicep)](bicep/template-latest.bicep) is used to provision Azure resources in a resource group.
 
  [Learn more about bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
@@ -41,50 +41,50 @@ The [Bicep template (template-latest.bicep)](bicep/template-latest.bicep) is use
 
 1. Run the following to log in from your client using your default web browser
 
-    ```dotnetcli
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```dotnetcli
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
 2. Find a location you want to deploy the resource group
   
-    ```dotnetcli
+    ```azurecli
     az account list-locations -o table
     ```
 
 3. Create a resource group
 
-    ```dotnetcli
+    ```azurecli
     az group create --location "<location>" --name "<resource group name>"
     ```
 
     The following example deploys a resource group in North Europe
 
-    ```dotnetcli
+    ```azurecli
     az group create --location "northeurope" --name "one-click-poc"
     ```
 
 4. Deploy a bicep template
 
-    ```dotnetcli
+    ```azurecli
     az deployment group create --resource-group "<resource group name>" --template-file C:\temp\bicep\template-latest.bicep
 
     ```
 
     The following example deploys a bicep template
 
-    ```dotnetcli
+    ```azurecli
     az deployment group create --resource-group "one-click-poc" --template-file C:\temp\bicep\template-latest.bicep
     ```
 
 ## Terraform
 
-The [Terraform template (terraform/template-latest.tf)](terraform/template-latest.tf) is used to provision Azure resources in a  resource group.
+The [Terraform template (terraform/template-latest.tf)](terraform/template-latest.tf) is used to provision Azure resources in a resource group.
 
  [Learn more about Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/overview).
 
@@ -95,25 +95,25 @@ Prerequisites
 
 1. Run the following to log in from your client using your default web browser
 
-    ```dotnetcli
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```dotnetcli
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
 2. Find a location you want to deploy the resource group
   
-    ```dotnetcli
+    ```azurecli
     az account list-locations -o table
     ```
 
 3. Move to the folder [AzureSQLMI/deploy/terraform](AzureSQLMI/deploy/terraform)
 
-    ```dotnetcli
+    ```azurecli
     cd AzureSQLMI/deploy/terraform
     ```
 
@@ -121,32 +121,31 @@ Prerequisites
 
     e.g:
 
-    ```
+    ```azurecli
     resource_group_name = "one-click-poc"
     resource_group_location = "westeurope"
     ```
 
 5. Initialize a working directory for the terraform configuration
 
-    ```dotnetcli
+    ```azurecli
     terraform init
     ```
 
 6. Deploy the terraform template
 
-    ```dotnetcli
+    ```azurecli
     terraform apply -auto-approve
     ```
 
     A message asking for input of a value for the variable `suffix` will be displayed
-    
-    ```dotnetcli
+
+    ```azurecli
     var.suffix
         Enter a value: 
     ```
 
     Insert a value and press Enter.
-
 
 ## Azure Resources
 

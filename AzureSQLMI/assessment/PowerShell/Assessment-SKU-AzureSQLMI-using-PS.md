@@ -2,7 +2,7 @@
 
 # Assessment and SKU recommendation for Azure SQL Managed Instance using PowerShell
 
-Assess your SQL Server databases for Azure SQL Managed Instance readiness or identify any migration blockers before migrating them to Azure SQL Managed Instance.
+Assess your SQL Server databases for Azure SQL Managed Instance readiness or to identify any migration blockers before migrating them to Azure SQL Managed Instance.
 
 The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure SQL.
 
@@ -14,8 +14,6 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 - .Net Core 3.1 (Already installed)
 - Az.DataMigration PowerShell module
 
-Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
-
 ## Getting Started
 
 > [!CAUTION]
@@ -23,6 +21,8 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - **Connect to the Jump Box VM**
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
+
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
 ## Run the assessment
 
@@ -130,7 +130,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     All results will be displayed after the command finishes.
 
-    ![sku-recommendation]()
+    ![sqlmi-sku-recommendation]()
 
 2. Get SKU recommendations at scale using a config file.
 
@@ -153,7 +153,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-html]()
+    ![sqlmi-sku-recommendation-html]()
 
 ## Page Navigator
 

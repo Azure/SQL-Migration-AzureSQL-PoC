@@ -14,8 +14,6 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 - .Net Core 3.1 (Already installed)
 - Az.DataMigration PowerShell module
 
-Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
-
 ## Getting Started
 
 > [!CAUTION]
@@ -23,6 +21,8 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - **Connect to the Jump Box VM**
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
+
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
 ## Run the assessment
 
@@ -37,7 +37,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 2. **Assessment at scale** using config file
 
-    You can also create a config file to use as a parameter to run assessment on SQL servers.The config file has the following structure:
+    You can also create a config file to use as a parameter to run assessment on SQL servers. The config file has the following structure:
 
     ```json
     {
