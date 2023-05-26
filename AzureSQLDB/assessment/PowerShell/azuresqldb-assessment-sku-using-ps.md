@@ -58,6 +58,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     ```
 
     > [!TIP]
+    >
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
     Learn more about using [PowerShell to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-assessment.md)
@@ -80,6 +81,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     ```
 
     > [!TIP]
+    >
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 

@@ -75,6 +75,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     ```
 
     > [!WARNING]
+    >
     > If you receive an error message saying: "RegisterIntegrationRuntime.ps1 cannot be loaded because running scripts is disabled on this system", please, run the following command and re-run the PowerShell command above.
     >
     > `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
@@ -121,6 +122,7 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
     ```
 
     > [!NOTE]
+    >
     > This command may take 3-5 minutes to complete.
 
 You can also migrate the database schema from source to target using the [SQL Database Projects extension](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/sql-database-project-extension?view=sql-server-ver16) for Azure Data Studio.
@@ -178,6 +180,7 @@ You can also migrate the database schema from source to target using the [SQL Da
     ```
 
     > [!NOTE]
+    >
     > Migration may take a while to complete.
 
     Learn more about using [PowerShell to migrate](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-to-sql-db.md)

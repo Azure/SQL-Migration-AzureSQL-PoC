@@ -12,6 +12,20 @@ Take advantage of this one-click SQL Migration PoC to accelerate your migration 
 | SQL Server to Azure SQL Managed Instance  | [![One-click PoC to Azure SQL MI](./media/Azure-DevOps.svg)](./AzureSQLMI/deploy/README.md) [One-click PoC to Azure SQL MI](./AzureSQLMI/deploy/README.md)         |
 | SQL Server to Azure SQL Database          | [![One-click PoC to Azure SQL DB](./media/Azure-DevOps.svg)](./AzureSQLDB/deploy/README.md) [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)         |
 
+## Watch it
+
+[video](https://www.youtube.com/watch?v=qHaGY1oP7WU)
+
+[![Now in Android: 55](https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg)](https://www.youtube.com/watch?v=qHaGY1oP7WU "Now in Android: 55") 
+
+
+<iframe width="560" height="315" 
+src="https://www.youtube.com/watch?v=qHaGY1oP7WU"  
+frameborder="0"  
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"  
+allowfullscreen></iframe> 
+
+
 ## Prerequisites
 
 - You need to have at least an owner role or contributor role for the Azure subscription. A separate resource group should be created and delegated roles necessary for this proof of concept.
