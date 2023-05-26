@@ -26,7 +26,7 @@ Perform a login migration of your SQL Server databases running on-premises, SQL 
 
 Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
-1. Install az datamigration extension if it isn't installed. Open either a command shell or PowerShell as administrator.
+1. Install az datamigration extension if it isn't installed.
 
     ```azurecli
     az extension add --name datamigration
@@ -70,27 +70,29 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
-Use the **az datamigration login-migration** command to create and start a database migration.
+1. Use the **az datamigration login-migration** command to create and start a database migration.
 
-```azurecli
-    az datamigration login-migration  `
-    --src-sql-connection-str  "data source=10.1.0.4,1433;user id=sqladmin;password=My`$upp3r`$ecret;initial catalog=master;TrustServerCertificate=True" `
-    --tgt-sql-connection-str  "data source=<managed instance name>.database.windows.net;user id=sqladmin;password=My`$upp3r`$ecret;initial catalog=master;TrustServerCertificate=True" `
-    --list-of-login "sqlpoc" "sqlpocapp" "sqlpocreport" `
-    --output-folder "C:\temp\output"
-```
+    ```azurecli
+        az datamigration login-migration  `
+        --src-sql-connection-str  "data source=10.1.0.4,1433;user id=sqladmin;password=My`$upp3r`$ecret;initial catalog=master;TrustServerCertificate=True" `
+        --tgt-sql-connection-str  "data source=<managed instance name>.database.windows.net;user id=sqladmin;password=My`$upp3r`$ecret;initial catalog=master;TrustServerCertificate=True" `
+        --list-of-login "sqlpoc" "sqlpocapp" "sqlpocreport" `
+        --output-folder "C:\temp\output"
+    ```
 
-> [!WARNING]
->
-> Change the **Managed Instance name**
+    > [!WARNING]
+    >
+    > Change the **Managed Instance name**
 
-> [!TIP]
->
-> Currently, only Azure SQL Managed Instance and SQL Server on Azure Virtual Machines targets are supported.
->
-> Windows accounts are out of scope but if you want to learn how to migrate them, check out this [prerequisites](https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#prerequisites 
+    > [!TIP]
+    >
+    > Currently, only Azure SQL Managed Instance and SQL Server on Azure Virtual Machines targets are supported.
+    >
+    > Windows accounts are out of scope but if you want to learn how to migrate them, check out this [prerequisites](<https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#prerequisites>
 
-Learn more about [Migrate SQL Server logins ](https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#configure-login-migration-settings)
+2. **Login migration at scale** using config file
+
+Learn more about [Migrate SQL Server logins](https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#configure-login-migration-settings)
 
 ## Page Navigator
 

@@ -7,12 +7,8 @@ Perform offline migrations of your SQL Server databases running on-premises, SQL
 ## Prerequisites
 
 - SQL Server with Windows authentication or SQL authentication access
-- .Net Core 3.1 *(Already installed)*
-- Azure CLI *(Already installed)*
-- Integration Runtime *(Already installed)*
-- Dotnet runtime *(Already installed)*
-- Dotnet SDK *(Already installed)*
-- Az datamigration extension
+- .Net Core 3.1 (Already installed)
+- Az.DataMigration PowerShell module
 
 ## Getting Started
 
@@ -265,6 +261,7 @@ Use the **Get-AzDataMigrationToSqlDb** command to monitor migration.
     -Expand MigrationStatusDetails
 
     $monitoringMigration.MigrationStatus | Format-List
+    ```
 
 You can also use the Azure Portal to monitor migration.
 

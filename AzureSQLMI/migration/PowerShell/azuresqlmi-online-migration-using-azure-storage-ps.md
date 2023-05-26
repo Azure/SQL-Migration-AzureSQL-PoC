@@ -1,0 +1,220 @@
+[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Online migration for Azure SQL Managed Instance
+
+# Online migration for Azure SQL Managed Instance
+
+Perform online migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
+
+## Migration using Azure storage
+
+### Prerequisites
+
+> [!CAUTION]
+>
+> - **Connect to the Jump Box VM**
+> - VM name: **jb-migration**
+> - Use the credentials provided on the deploy page.
+
+- SQL Server with Windows authentication or SQL authentication access
+- .Net Core 3.1 *(Already installed)*
+- Azure CLI *(Already installed)*
+- Az datamigration extension
+- Azure storage account *(Already provisioned)*
+- Azure Data Studio *(Already installed)*
+- Azure SQL Migration extension for Azure Data Studio
+
+1. Run the following to log in from your client using your default web browser if you are not logged in.
+
+    ```powershell
+    Connect-AzAccount -Subscription <Subscription-id>
+    ```
+
+    If you have more than one subscription, you can select a particular subscription.
+
+    ```powershell
+    Set-AzContext -SubscriptionId <subscription-id>
+    ```
+
+    The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure.
+
+    In addition, the PowerShell command [Data Migration](https://learn.microsoft.com/en-us/powershell/module/az.datamigration/?view=azps-10.0.0#data-migrationt) can be used to manage data migration at scale.
+
+2. Backup database
+
+    Backups must be taken before starting the migration:
+    - [Create SAS tokens for your storage containers](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers)
+    - [Create a SQL Server credential using a shared access signature](https://learn.microsoft.com/en-us/sql/relational-databases/tutorial-use-azure-blob-storage-service-with-sql-server-2016?view=sql-server-ver16#2---create-a-sql-server-credential-using-a-shared-access-signature)
+    - [Database backup to URL](https://learn.microsoft.com/en-us/sql/relational-databases/tutorial-use-azure-blob-storage-service-with-sql-server-2016?view=sql-server-ver16#3---database-backup-to-url)
+
+    The following T-SQL is an example that creates the credential to use a Shared Access Signature and creates a backup.
+
+    ```sql
+    USE master
+    CREATE CREDENTIAL [https://storagemigration.blob.core.windows.net/migration] 
+      -- this name must match the container path, start with https and must not contain a forward slash at the end
+    WITH IDENTITY='SHARED ACCESS SIGNATURE' 
+      -- this is a mandatory string and should not be changed   
+     , SECRET = 'XXXXXXX' 
+       -- this is the shared access signature key. Don't forget to remove the first character "?"   
+    GO
+    
+    -- Back up the full AdventureWorks2019 database to the container
+    BACKUP DATABASE AdventureWorks2019 TO URL = 'https://storagemigration.blob.core.windows.net/migration/AdventureWorks2019.bak'
+    WITH CHECKSUM
+    ```
+
+
+### Start database migration
+
+> [!CAUTION]
+>
+> - **Connect to the Jump Box VM**
+> - VM name: **jb-migration**
+> - Use the credentials provided on the deploy page.
+
+1. Convert the passwords to secure string
+
+    ```powershell
+    $sourcePassword = ConvertTo-SecureString "My`$upp3r`$ecret" -AsPlainText -Force
+    $targetPassword = ConvertTo-SecureString "My`$upp3r`$ecret" -AsPlainText -Force
+    ```
+
+2. Use the **New-AzDataMigrationToSqlManagedInstance** command to create and start a database migration.
+
+```powershell
+    New-AzDataMigrationToSqlManagedInstance `
+    -ResourceGroupName <resource group name> `
+    -ManagedInstanceName <azure sql mi instance name> `
+    -TargetDbName "AdventureWorks" `
+    -Kind "SqlMI" `
+    -Scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/managedInstances/<azure sql mi instance name>" `
+    -MigrationService "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
+    -AzureBlobStorageAccountResourceId "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
+    -AzureBlobAccountKey "<storage key>" `
+    -AzureBlobContainerName "migration" `
+    -SourceSqlConnectionAuthentication "SqlAuthentication" `
+    -SourceSqlConnectionDataSource "10.1.0.4" `
+    -SourceSqlConnectionUserName "sqladmin" `
+    -SourceSqlConnectionPassword $sourcePassword `
+    -SourceDatabaseName "AdventureWorks2019"
+    -Offline `
+    -OfflineConfigurationLastBackupName "<backup name>.bak"
+```
+
+> [!TIP]
+>
+> You should take all necessary backups.
+
+Learn more about using [Powershell to migrate](https://github.com/Azure-Samples/data-migration-sql/blob/main/PowerShell/sql-server-to-sql-mi-blob.md#start-online-database-migration)
+
+### Monitoring migration
+
+Use the **Get-AzDataMigrationToSqlManagedInstance** command to monitor migration.
+
+1. Get complete migration details
+
+    ```powershell
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName <resource group name> `
+    -SqlDbInstanceName <azure sql mi instance name> `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration
+    ```
+
+    The following example brings complete details
+
+    ```powershell
+
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName oneclickpoc `
+    -SqlDbInstanceName sqlservercsapocmigration `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration
+    
+   ```
+
+2. ProvisioningState should be **Creating, Failed, or Succeeded**
+
+     ```powershell
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName <resource group name> `
+    -SqlDbInstanceName <azure sql mi instance name> `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration.ProvisioningState | Format-List
+    ```
+
+    The following example brings complete details
+
+    ```powershell
+
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName oneclickpoc `
+    -SqlDbInstanceName sqlservercsapocmigration `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration.ProvisioningState | Format-List
+    
+   ```
+
+3. MigrationStatus should be **InProgress, Canceling, Failed, or Succeeded**
+
+    ```powershell
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName <resource group name> `
+    -SqlDbInstanceName <azure sql mi instance name> `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration.MigrationStatus | Format-List
+    ```
+
+    The following example brings complete details
+
+    ```powershell
+
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
+    -ResourceGroupName oneclickpoc `
+    -SqlDbInstanceName sqlservercsapocmigration `
+    -TargetDbName AdventureWorks `
+    -Expand MigrationStatusDetails
+
+    $monitoringMigration.MigrationStatus | Format-List
+    ```
+
+### Performing cutover 
+
+Use the **Invoke-AzDataMigrationCutoverToSqlManagedInstance** command to perform cutover.
+
+ 1. Obtain the MigrationOperationId
+
+    ```powershell
+    $miMigration = Get-AzDataMigrationToSqlManagedInstance -ResourceGroupName "<resource group name>" -ManagedInstanceName "<azure sql mi instance name>" -TargetDbName "AdventureWorks"
+    ```
+
+2. Perform Cutover
+
+    ```powershell
+    Invoke-AzDataMigrationCutoverToSqlManagedInstance -ResourceGroupName "<resource group name>" -ManagedInstanceName "<azure sql mi instance name>" -TargetDbName "AdventureWorks" -MigrationOperationId $miMigration.MigrationOperationId
+    ```
+
+## Migrating at scale
+
+This script performs an [end to end migration of multiple databases in multiple servers](https://github.com/Azure-Samples/data-migration-sql/tree/main/CLI/scripts/multiple%20databases)
+
+## Page Navigator
+
+[Deploy the solution for Azure SQL Managed Instance](../deploy/README.md)
+
+[Assessment and SKU recommendation for Azure SQL Managed Instance](../assessment/README.md)
+
+[Offline migration for Azure SQL Managed Instance](../migration/offline.md)
+
+[SQL Server migration one-click PoC to Azure SQL](../../README.md)
+
+[Index: Table of Contents](../../index.md)

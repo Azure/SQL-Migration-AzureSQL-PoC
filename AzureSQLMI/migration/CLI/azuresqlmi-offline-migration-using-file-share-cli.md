@@ -1,18 +1,10 @@
 [SQL Server migration one-click PoC to Azure SQL](../../README.md) > Offline migration for Azure SQL Managed Instance
 
-# Offline migration for Azure SQL Managed Instance
+# Offline migration for Azure SQL Managed Instance using Azure Storage
 
 Perform offline migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
 
-## Migration using Azure storage
-
 ### Prerequisites
-
-> [!CAUTION]
->
-> - **Connect to the Jump Box VM**
-> - VM name: **jb-migration**
-> - Use the credentials provided on the deploy page.
 
 - SQL Server with Windows authentication or SQL authentication access
 - .Net Core 3.1 *(Already installed)*
@@ -22,21 +14,31 @@ Perform offline migrations of your SQL Server databases running on-premises, SQL
 - Azure Data Studio *(Already installed)*
 - Azure SQL Migration extension for Azure Data Studio
 
-1. Install az datamigration extension if it isn't installed. Open either a command shell or PowerShell as administrator.
+## Getting Started
 
-    ```dotnetcli
+> [!CAUTION]
+>
+> - **Connect to the Jump Box VM**
+> - VM name: **jb-migration**
+> - Use the credentials provided on the deploy page.
+
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
+
+1. Install az datamigration extension if it isn't installed.
+
+    ```azurecli
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```dotnetcli
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```dotnetcli
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
@@ -78,20 +80,21 @@ Perform offline migrations of your SQL Server databases running on-premises, SQL
 
 Use the **az datamigration sql-managed-instance create** command to create and start a database migration.
 
-```dotnetcli
+```azurecli
 az datamigration sql-managed-instance create `
---source-location '{\"AzureBlob\":{\"storageAccountResourceId\":\"/subscriptions/<SubscriptionId>/resourceGroups/<ResourceGroupName>/providers/Microsoft.Storage/storageAccounts/<StorageAccountName>\",\"accountKey\":\"<StorageKey>\",\"blobContainerName\":\"AdventureWorksContainer\"}}' `
---migration-service "/subscriptions/<SubscriptionId>/resourceGroups/<ResourceGroupName>/providers/Microsoft.DataMigration/SqlMigrationServices/MySqlMigrationService" `
---scope "/subscriptions/<SubscriptionId>/resourceGroups/<ResourceGroupName>/providers/Microsoft.Sql/managedInstances/<ManagedInstanceName>" `
+--source-location '{\"AzureBlob\":{\"storageAccountResourceId\":\"/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>\",\"accountKey\":\"<storage key>\",\"blobContainerName\":\"migration\"}}' `
+--migration-service "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/MySqlMigrationService" `
+--scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/managedInstances/<azure sql mi instance name>" `
 --source-database-name "AdventureWorks2019" `
 --source-sql-connection authentication="SqlAuthentication" data-source="10.1.0.4" password="My$upp3r$ecret" user-name="sqladmin" `
---target-db-name "AdventureWorks2019" `
---resource-group <ResourceGroupName> `
---managed-instance-name <ManagedInstanceName>
---offline-configuration last-backup-name="AdventureWorks.bak" offline=true
+--target-db-name "AdventureWorks" `
+--resource-group <resource group name> `
+--managed-instance-name <azure sql mi instance name>
+--offline-configuration last-backup-name="<backup name>.bak" offline=true
 ```
 
 > [!TIP]
+>
 > You should take all necessary backups.
 
 Learn more about using [CLI to migrate](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-to-sql-mi-blob.md#start-online-database-migration)
@@ -102,26 +105,26 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
 1. Basic migration details
 
-    ```dotnetcli
-    az datamigration sql-managed-instance show --managed-instance-name "<ManagedInstanceName>" --resource-group "<ResourceGroupName>" --target-db-name "AdventureWorks2019"
+    ```azurecli
+    az datamigration sql-managed-instance show --managed-instance-name "<azure sql mi instance name>" --resource-group "<resource group name>" --target-db-name "AdventureWorks"
     ```
 
 2. Gets complete migration detail
 
-    ```dotnetcli
-    az datamigration sql-managed-instance show --managed-instance-name "<ManagedInstanceName>" --resource-group "<ResourceGroupName>" --target-db-name "AdventureWorks2019" --expand=MigrationStatusDetails
+    ```azurecli
+    az datamigration sql-managed-instance show --managed-instance-name "<azure sql mi instance name>" --resource-group "<resource group name>" --target-db-name "AdventureWorks" --expand=MigrationStatusDetails
     ```
 
 3. *ProvisioningState* should be "**Creating**", "**Failed**" or "**Succeeded**"
 
-    ```dotnetcli
-    az datamigration sql-managed-instance show --managed-instance-name "<ManagedInstanceName>" --resource-group "<ResourceGroupName>" --target-db-name "AdventureWorks2019" --expand=MigrationStatusDetails --query "properties.provisioningState"
+    ```azurecli
+    az datamigration sql-managed-instance show --managed-instance-name "<azure sql mi instance name>" --resource-group "<resource group name>" --target-db-name "AdventureWorks" --expand=MigrationStatusDetails --query "properties.provisioningState"
     ```
 
 4. *MigrationStatus* should be "**InProgress**", "**Canceling**", "**Failed**" or "**Succeeded**"
 
-    ```dotnetcli
-    az datamigration sql-managed-instance show --managed-instance-name "<ManagedInstanceName>" --resource-group "<ResourceGroupName>" --target-db-name "AdventureWorks2019" --expand=MigrationStatusDetails --query "properties.migrationStatus"
+    ```azurecli
+    az datamigration sql-managed-instance show --managed-instance-name "<azure sql mi instance name>" --resource-group "<resource group name>" --target-db-name "AdventureWorks" --expand=MigrationStatusDetails --query "properties.migrationStatus"
     ```
 
 ## Migrating at scale
