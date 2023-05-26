@@ -16,6 +16,10 @@ Perform a login migration of your SQL Server databases running on-premises, SQL 
 - Azure Data Studio *(Already installed)*
 - Azure SQL Migration extension for Azure Data Studio
 
+Currently, only Azure SQL Managed Instance and SQL Server on Azure Virtual Machines targets are supported.
+
+Completing the database migrations of your on-premises databases to Azure SQL before starting the login migration is ***recommended***. It will ensure that the database-level users have already been migrated to the target; therefore the login migration process will perform the user-login mappings synchronization.
+
 ## Getting Started
 
 > [!CAUTION]
@@ -50,7 +54,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 3. Verify SQL Logins to be migrated
 
-    Open the Azure Data Studio and run the following T-SQL statement to see all SQL Logins.
+    Open the Azure Data Studio, connect to the *Azure SQL VM* (**10.1.0.4**) using the "**sqladmin**" user and password and run the following T-SQL statement to see all SQL Logins.
 
     ```sql
     SELECT 
@@ -70,6 +74,10 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
+At this point you will need to get the Azure SQL MI name. [Get server connection information](https://learn.microsoft.com/en-us/azure/azure-sql/database/connect-query-content-reference-guide?view=azuresql#get-server-connection-information)
+
+![sqlmi-connectionstring](../../../media/sqlmi-connectionstring.png)
+
 1. Use the **az datamigration login-migration** command to create and start a database migration.
 
     ```azurecli
@@ -82,17 +90,17 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     > [!WARNING]
     >
-    > Change the **Managed Instance name**
+    > Change the **managed instance name**
 
     > [!TIP]
     >
-    > Currently, only Azure SQL Managed Instance and SQL Server on Azure Virtual Machines targets are supported.
-    >
     > Windows accounts are out of scope but if you want to learn how to migrate them, check out this [prerequisites](<https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#prerequisites>
+
+    ![sqlmi-login-migration](../../../media/sqlmi-login-migration-cli.png)
 
 2. **Login migration at scale** using config file
 
-Learn more about [Migrate SQL Server logins](https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#configure-login-migration-settings)
+    Learn more about [Migrate SQL Server logins](https://learn.microsoft.com/en-us/azure/dms/tutorial-login-migration-ads#configure-login-migration-settings)
 
 ## Page Navigator
 

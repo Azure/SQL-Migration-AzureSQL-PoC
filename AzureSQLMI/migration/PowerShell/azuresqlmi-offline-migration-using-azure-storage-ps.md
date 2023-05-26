@@ -22,7 +22,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure.
 
-    In addition, the Azure PowerShell command [Az.DataMigration](https://learn.microsoft.com/en-us/powershell/module/az.datamigration/?view=azps-10.0.0) can be used to manage data migration at scale.
+In addition, the Azure PowerShell command [Az.DataMigration](https://learn.microsoft.com/en-us/powershell/module/az.datamigration/?view=azps-10.0.0) can be used to manage data migration at scale.
 
 1. Run the following to log in from your client using your default web browser if you are not logged in.
 
@@ -80,25 +80,47 @@ The [Azure SQL migration extension for Azure Data Studio](https://learn.microsof
 
 2. Use the **New-AzDataMigrationToSqlManagedInstance** command to create and start a database migration.
 
-```powershell
-    New-AzDataMigrationToSqlManagedInstance `
-    -ResourceGroupName <resource group name> `
-    -ManagedInstanceName <azure sql mi instance name> `
-    -TargetDbName "AdventureWorks" `
-    -Kind "SqlMI" `
-    -Scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/managedInstances/<azure sql mi instance name>" `
-    -MigrationService "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
-    -AzureBlobStorageAccountResourceId "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
-    -AzureBlobAccountKey "<storage key>" `
-    -AzureBlobContainerName "migration" `
-    -SourceSqlConnectionAuthentication "SqlAuthentication" `
-    -SourceSqlConnectionDataSource "10.1.0.4" `
-    -SourceSqlConnectionUserName "sqladmin" `
-    -SourceSqlConnectionPassword $sourcePassword `
-    -SourceDatabaseName "AdventureWorks2019" `
-    -Offline `
-    -OfflineConfigurationLastBackupName "<backup name>.bak"
-```
+    ```powershell
+        New-AzDataMigrationToSqlManagedInstance `
+        -ResourceGroupName <resource group name> `
+        -ManagedInstanceName <azure sql mi instance name> `
+        -TargetDbName "AdventureWorks" `
+        -Kind "SqlMI" `
+        -Scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/managedInstances/<azure sql mi instance name>" `
+        -MigrationService "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
+        -AzureBlobStorageAccountResourceId "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
+        -AzureBlobAccountKey "<storage key>" `
+        -AzureBlobContainerName "migration" `
+        -SourceSqlConnectionAuthentication "SqlAuthentication" `
+        -SourceSqlConnectionDataSource "10.1.0.4" `
+        -SourceSqlConnectionUserName "sqladmin" `
+        -SourceSqlConnectionPassword $sourcePassword `
+        -SourceDatabaseName "AdventureWorks2019" `
+        -Offline `
+        -OfflineConfigurationLastBackupName "<backup name>.bak"
+    ```
+
+    The following example creates and starts a migration of complete source database with target database name AdventureWorks:
+
+    ```powershell
+        New-AzDataMigrationToSqlManagedInstance `
+        -ResourceGroupName oneclickpoc `
+        -ManagedInstanceName sqlmicsapocmigration `
+        -TargetDbName "AdventureWorks" `
+        -Kind "SqlMI" `
+        -Scope "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.Sql/managedInstances/sqlmicsapocmigration" `
+        -MigrationService "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
+        -AzureBlobStorageAccountResourceId "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.Storage/storageAccounts/storagepocmigration" `
+        -AzureBlobAccountKey "XXXXXX" `
+        -AzureBlobContainerName "migration" `
+        -SourceSqlConnectionAuthentication "SqlAuthentication" `
+        -SourceSqlConnectionDataSource "10.1.0.4" `
+        -SourceSqlConnectionUserName "sqladmin" `
+        -SourceSqlConnectionPassword $sourcePassword `
+        -SourceDatabaseName "AdventureWorks2019" `
+        -Offline `
+        -OfflineConfigurationLastBackupName "AdventureWorks2019.bak"
+    ```
 
 > [!TIP]
 >

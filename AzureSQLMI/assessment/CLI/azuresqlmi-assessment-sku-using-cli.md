@@ -149,7 +149,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     All results will be displayed after the command finishes.
 
-    ![sqlmi-sku-recommendation](media/sku-recommendation.png)
+    ![sqlmi-sku-recommendation](../../../media/sqlmi-sku-recommendation-cli.png)
 
 2. Get SKU recommendations at scale using a config file.
 
@@ -172,7 +172,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sqlmi-sku-recommendation-html](../../media/sku-recommendation-htlm.png)
+    ![sqlmi-sku-recommendation-html](../../../media/sqlmi-sku-recommendation-html.png)
 
 ## Page Navigator
 

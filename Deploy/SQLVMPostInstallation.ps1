@@ -137,5 +137,6 @@ $Parameters = @{
     FullAccess = 'Administrators'
 }
 New-SmbShare @Parameters
+Grant-SmbShareAccess -Name "SQLBackup" -AccountName "Everyone" -AccessRight Full -Confirm:$false
 
 Write-Host "SMB Share was create successfully"
