@@ -14,10 +14,6 @@ Take advantage of this one-click SQL Migration PoC to accelerate your migration 
 
 ## Watch it
 
-[video](https://www.youtube.com/watch?v=qHaGY1oP7WU)
-
-[![Now in Android: 55](https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg)](https://www.youtube.com/watch?v=qHaGY1oP7WU "Now in Android: 55") 
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qHaGY1oP7WU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Prerequisites
