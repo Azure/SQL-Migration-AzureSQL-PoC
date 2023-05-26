@@ -2,7 +2,7 @@
 
 # Assessment and SKU recommendation for Azure SQL Managed Instance using CLI
 
-Assess your SQL Server databases for Azure SQL Managed Instance readiness or identify any migration blockers before migrating them to Azure SQL Managed Instance.
+Assess your SQL Server databases for Azure SQL Managed Instance readiness or to identify any migration blockers before migrating them to Azure SQL Managed Instance.
 
 The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure SQL.
 
@@ -15,8 +15,6 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 - Azure CLI (Already installed)
 - Az datamigration extension
 
-Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
-
 ## Getting Started
 
 > [!CAUTION]
@@ -25,21 +23,23 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
+
 1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
 
-    ```powershell
+    ```azurecli
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```powershell
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```powershell
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
@@ -47,7 +47,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 1. Run a SQL Server assessment using the ***az datamigration get-assessment*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment `
     --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -72,7 +72,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     The config file can be passed to the cmdlet in the following way
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -89,7 +89,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
 1. Run a SQL Server performance data collection using the ***az datamigration performance-data-collection*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection `
     --connection-string "Data Source=10.1.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -123,7 +123,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     The config file can be passed to the cmdlet in the following way.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -139,17 +139,17 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-sku-recommendation `
     --output-folder "C:\temp\output" `
     --display-result `
     --overwrite `
-    --target-platform "AzureSqlManagedInstance"`
+    --target-platform "AzureSqlManagedInstance"
     ```
 
     All results will be displayed after the command finishes.
 
-    ![sku-recommendation](media/sku-recommendation.png)
+    ![sqlmi-sku-recommendation](media/sku-recommendation.png)
 
 2. Get SKU recommendations at scale using a config file.
 
@@ -172,7 +172,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-htlm](../../media/sku-recommendation-htlm.png)
+    ![sqlmi-sku-recommendation-html](../../media/sku-recommendation-htlm.png)
 
 ## Page Navigator
 

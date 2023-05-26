@@ -15,8 +15,6 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 - Azure CLI (Already installed)
 - Az datamigration extension
 
-Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
-
 ## Getting Started
 
 > [!CAUTION]
@@ -25,21 +23,23 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
+
 1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
 
-    ```powershell
+    ```azurecli
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```powershell
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```powershell
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
@@ -47,7 +47,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 1. Run a SQL Server assessment using the ***az datamigration get-assessment*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment `
     --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -72,7 +72,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     The config file can be passed to the cmdlet in the following way
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -89,7 +89,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 1. Run a SQL Server performance data collection using the ***az datamigration performance-data-collection*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection `
     --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -123,7 +123,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     The config file can be passed to the cmdlet in the following way.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
@@ -139,7 +139,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-sku-recommendation `
     --output-folder "C:\temp\output" `
     --display-result `

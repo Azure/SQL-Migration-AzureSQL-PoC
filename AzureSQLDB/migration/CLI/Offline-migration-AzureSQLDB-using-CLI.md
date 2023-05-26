@@ -6,12 +6,6 @@ Perform offline migrations of your SQL Server databases running on-premises, SQL
 
 ## Prerequisites
 
-> [!CAUTION]
->
-> - **Connect to the Jump Box VM**
-> - VM name: **jb-migration**
-> - Use the credentials provided on the deploy page.
-
 - SQL Server with Windows authentication or SQL authentication access
 - .Net Core 3.1 *(Already installed)*
 - Azure CLI *(Already installed)*
@@ -20,23 +14,31 @@ Perform offline migrations of your SQL Server databases running on-premises, SQL
 - Dotnet SDK *(Already installed)*
 - Az datamigration extension
 
+## Getting Started
+
+> [!CAUTION]
+>
+> - **Connect to the Jump Box VM**
+> - VM name: **jb-migration**
+> - Use the credentials provided on the deploy page.
+
 Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
 1. Install az datamigration extension if it isn't installed.
 
-    ```powershell
+    ```azurecli
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser if you are not logged in.
 
-    ```powershell
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```powershell
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
@@ -48,7 +50,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 1. Use the **az datamigration sql-service list-auth-key** command to obtain AuthKeys.
 
-    ```powershell
+    ```azurecli
     $AuthKey = az datamigration sql-service list-auth-key `
     --resource-group "<resource group name>" `
     --sql-migration-service-name "PoCMigrationService" `
@@ -57,7 +59,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     - The following example obtains the authKey:
 
-    ```powershell
+    ```azurecli
     $AuthKey = az datamigration sql-service list-auth-key `
     --resource-group "oneclickpoc" `
     --sql-migration-service-name "PoCMigrationService" `
@@ -66,19 +68,19 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 2. Change the PowerShell execution policy.
 
-    ```powershell
+    ```azurecli
     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
     ```
 
 3. Use the **az datamigration register-integration-runtime** command to register the service on Integration Runtime.
 
-    ```powershell
+    ```azurecli
     az datamigration register-integration-runtime --auth-key <authKey>
     ```
 
     The following example registers the service on Integration Runtime:
 
-    ```powershell
+    ```azurecli
     az datamigration register-integration-runtime --auth-key $AuthKey
     ```
 
@@ -97,7 +99,7 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
 
     Use the **SqlPackage /Action:Extract** command to extract metadata from your source
 
-    ```powershell
+    ```azurecli
     SqlPackage /Action:Extract `
     /TargetFile:"C:\temp\projects\adventureworks2019.dacpac" `
     /p:ExtractAllTableData=false `
@@ -114,7 +116,7 @@ Performing a schema migration can be accomplished using  [***SqlPackage***](http
 
     Use the **SqlPackage /Action:Publish** command to publish metadata to your Azure SQL database
 
-    ```powershell
+    ```azurecli
     SqlPackage /Action:Publish `
     /SourceFile:"C:\temp\projects\adventureworks2019.dacpac" `
     /p:CreateNewDatabase=false `
@@ -137,7 +139,7 @@ You can also migrate the database schema from source to target using the [SQL Da
 
 1. Use the **az datamigration sql-db create** command to create and start a database migration
 
-    ```powershell
+    ```azurecli
     
     az datamigration sql-db create `
     --migration-service "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/sqlMigrationServices/PoCMigrationService" `
@@ -152,7 +154,7 @@ You can also migrate the database schema from source to target using the [SQL Da
 
     The following example creates and starts a migration of complete source database with target database name AdventureWorks:
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db create `
     --migration-service "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.DataMigration/sqlMigrationServices/PoCMigrationService" `
     --scope "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.Sql/servers/sqlservercsapocmigration" `
@@ -175,7 +177,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
 1. Basic migration details
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "<resource group name>" `
     --sqldb-instance-name "<azure sql db instance>" `
@@ -184,7 +186,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
     The following example brings basic details
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "oneclickpoc" `
     --sqldb-instance-name "sqlservercsapocmigration" `
@@ -193,7 +195,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
 2. Gets complete migration detail
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "<resource group name>" `
     --sqldb-instance-name "<azure sql db instance>" `
@@ -203,7 +205,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
     The following example Gets complete details
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "oneclickpoc" `
     --sqldb-instance-name "sqlservercsapocmigration" `
@@ -213,7 +215,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
 3. ProvisioningState should be **Creating, Failed, or Succeeded**
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "<resource group name>" `
     --sqldb-instance-name "<azure sql db instance>" `
@@ -224,7 +226,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
     The following example gets the provisioning states
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "oneclickpoc" `
     --sqldb-instance-name "sqlservercsapocmigration" `
@@ -235,7 +237,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
 4. MigrationStatus should be **InProgress, Canceling, Failed, or Succeeded**
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "<resource group name>" `
     --sqldb-instance-name "<azure sql db instance>" `
@@ -246,7 +248,7 @@ Use the **az datamigration sql-db show** command to monitor migration.
 
     The following example gets the migration status
 
-    ```powershell
+    ```azurecli
     az datamigration sql-db show `
     --resource-group "oneclickpoc" `
     --sqldb-instance-name "sqlservercsapocmigration" `
