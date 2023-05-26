@@ -12,15 +12,12 @@ Take advantage of this one-click SQL Migration PoC to accelerate your migration 
 | SQL Server to Azure SQL Managed Instance  | [![One-click PoC to Azure SQL MI](./media/Azure-DevOps.svg)](./AzureSQLMI/deploy/README.md) [One-click PoC to Azure SQL MI](./AzureSQLMI/deploy/README.md)         |
 | SQL Server to Azure SQL Database          | [![One-click PoC to Azure SQL DB](./media/Azure-DevOps.svg)](./AzureSQLDB/deploy/README.md) [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)         |
 
-## Watch it
+## Youtube walkthrough
 
-<!-- blank line -->
+You can watch this short video to get familiarized with the SQL Server migration one-click PoC to Azure SQL repository.
 
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/qHaGY1oP7WU" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[![Youtube SQL Server migration one-click PoC to Azure SQL](https://img.youtube.com/vi/qHaGY1oP7WU/0.jpg)](https://www.youtube.com/watch?v=qHaGY1oP7WU)
 
-<!-- blank line -->
 
 ## Prerequisites
 
