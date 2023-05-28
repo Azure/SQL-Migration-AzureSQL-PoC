@@ -1,6 +1,6 @@
 [SQL Server migration one-click PoC to Azure SQL](../../README.md) > Offline migration for Azure SQL Managed Instance
 
-# Offline migration for Azure SQL Managed Instance using Azure Storage
+# Online migration for Azure SQL Managed Instance using File Share
 
 Perform offline migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
 
@@ -119,37 +119,7 @@ az datamigration sql-managed-instance create `
 --resource-group <resource group name> `
 --managed-instance-name <azure sql mi instance name>
 --offline-configuration last-backup-name="<backup name>.bak" offline=true
-
-    ```azurecli
-    az datamigration sql-managed-instance create `
-    --source-location '{\"fileShare\":{\"path\":\"\\\\10.1.0.4\\SQLBackup\",\"password\":\"My$upp3r$ecret\",\"username\":\"10.1.0.4\\sqladmin\"}}' `
-    --target-location account-key="<storage key>" storage-account-resource-id="/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
-    --migration-service "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
-    --scope "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Sql/managedInstances/<azure sql mi instance name>" `
-    --source-database-name "AdventureWorks" `
-    --source-sql-connection authentication="SqlAuthentication" data-source="10.1.0.4" password="My$upp3r$ecret" user-name="sqladmin" `
-    --target-db-name "AdventureWorks" `
-    --resource-group sqladmin `
-    --managed-instance-name <azure sql mi instance name> `
-    --offline-configuration offline=true
-
-
-    The following example creates and starts a migration of complete source database with target database name AdventureWorks:
-
-    ```azurecli
-
- az datamigration sql-managed-instance create `
-    --source-location '{\"fileShare\":{\"path\":\"\\\\10.1.0.4\\SQLBackup\",\"password\":\"My`$upp3r`$ecret\",\"username\":\"10.1.0.4\\sqladmin\"}}' `
-    --target-location account-key="XXXXXXXX" storage-account-resource-id="/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
-    --migration-service "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
-    --scope "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/oneclickpoc/providers/Microsoft.Sql/managedInstances/sqlmicsapocmigration" `
-    --source-database-name "AdventureWorks" `
-    --source-sql-connection authentication="SqlAuthentication" data-source="10.1.0.4" password="My`$upp3r`$ecret" user-name="sqladmin" `
-    --target-db-name "AdventureWorks" `
-    --resource-group sqladmin `
-    --managed-instance-name sqlmicsapocmigration `
-    --offline-configuration offline=true
-    ```
+```
 
 > [!TIP]
 >

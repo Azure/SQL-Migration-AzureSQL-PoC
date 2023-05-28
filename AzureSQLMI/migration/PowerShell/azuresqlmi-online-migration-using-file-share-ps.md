@@ -1,8 +1,8 @@
 [SQL Server migration one-click PoC to Azure SQL](../../README.md) > Offline migration for Azure SQL Managed Instance
 
-# Offline migration for Azure SQL Managed Instance using File Share
+# Online migration for Azure SQL Managed Instance using File Share
 
-Perform offline migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
+Perform online migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
 
 ### Prerequisites
 
@@ -119,15 +119,14 @@ In addition, the Azure PowerShell command [Az.DataMigration](https://learn.micro
         -MigrationService "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.DataMigration/SqlMigrationServices/PoCMigrationService" `
         -StorageAccountResourceId "/subscriptions/<subscription id>/resourceGroups/<resource group name>/providers/Microsoft.Storage/storageAccounts/<storage account name>" `
         -StorageAccountKey "<storage key>" `
-        -FileSharePath "\\sqlvm-001\SQLBackup" `
-        -FileShareUsername "sqlvm-001\sqladmin" `
+        -FileSharePath "\\10.1.0.4\SQLBackup" `
+        -FileShareUsername "10.1.0.4\sqladmin" `
         -FileSharePassword $sourceFileSharePassword `
         -SourceSqlConnectionAuthentication "SqlAuthentication" `
         -SourceSqlConnectionDataSource "10.1.0.4" `
         -SourceSqlConnectionUserName "sqladmin" `
         -SourceSqlConnectionPassword $sourcePassword `
         -SourceDatabaseName "AdventureWorks2019" `
-        -Offline 
     ```
 
     The following example creates and starts a migration of complete source database with target database name AdventureWorks:
@@ -150,7 +149,6 @@ In addition, the Azure PowerShell command [Az.DataMigration](https://learn.micro
         -SourceSqlConnectionUserName "sqladmin" `
         -SourceSqlConnectionPassword $sourcePassword `
         -SourceDatabaseName "AdventureWorks2019" `
-        -Offline 
     ```
 
 > [!TIP]
@@ -243,6 +241,22 @@ Use the **Get-AzDataMigrationToSqlManagedInstance** command to monitor migration
 You can also use the Azure Portal to monitor migration.
 
 ![migration succeeded](/media/sqldb-migration-succeeded.png)
+
+### Performing cutover
+
+Use the **Invoke-AzDataMigrationCutoverToSqlManagedInstance** command to perform cutover.
+
+ 1. Obtain the MigrationOperationId
+
+    ```powershell
+    $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance -ResourceGroupName "<resource group name>" -ManagedInstanceName "<azure sql mi instance name>" -TargetDbName "AdventureWorks"
+    ```
+
+ 2. Perform Cutover
+
+    ```powershell
+    Invoke-AzDataMigrationCutoverToSqlManagedInstance -ResourceGroupName "<resource group name>" -ManagedInstanceName "<azure sql mi instance name>" -TargetDbName "AdventureWorks" -MigrationOperationId $monitoringMigration.MigrationOperationId
+    ```
 
 ## Migrating at scale
 

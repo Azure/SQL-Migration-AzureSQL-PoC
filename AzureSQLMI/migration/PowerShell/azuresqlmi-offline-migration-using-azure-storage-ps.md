@@ -137,7 +137,7 @@ Use the **Get-AzDataMigrationToSqlManagedInstance** command to monitor migration
     ```powershell
     $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
     -ResourceGroupName <resource group name> `
-    -SqlDbInstanceName <azure sql db instance> `
+    -SqlDbInstanceName <azure sql mi instance name> `
     -TargetDbName AdventureWorks `
     -Expand MigrationStatusDetails
 
@@ -163,7 +163,7 @@ Use the **Get-AzDataMigrationToSqlManagedInstance** command to monitor migration
      ```powershell
     $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
     -ResourceGroupName <resource group name> `
-    -SqlDbInstanceName <azure sql db instance> `
+    -SqlDbInstanceName <azure sql mi instance name> `
     -TargetDbName AdventureWorks `
     -Expand MigrationStatusDetails
 
@@ -189,7 +189,7 @@ Use the **Get-AzDataMigrationToSqlManagedInstance** command to monitor migration
     ```powershell
     $monitoringMigration = Get-AzDataMigrationToSqlManagedInstance  `
     -ResourceGroupName <resource group name> `
-    -SqlDbInstanceName <azure sql db instance> `
+    -SqlDbInstanceName <azure sql mi instance name> `
     -TargetDbName AdventureWorks `
     -Expand MigrationStatusDetails
 
