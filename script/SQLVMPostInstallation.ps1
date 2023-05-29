@@ -106,9 +106,9 @@ Write-Host "Database encryption was created successfully"
 Write-Host "Enable TDE"
 Invoke-Sqlcmd "ALTER DATABASE AdventureWorksTDE SET ENCRYPTION ON" -Username $userName -Password $userPassword -Database 'AdventureWorksTDE'
 Write-Host "TDE was enable successfully" 
-Write-Host "Create certificate backup"
-Invoke-Sqlcmd "BACKUP CERTIFICATE TDEServerCert TO FILE = 'C:\temp\backup\TDEServerCert'" -Username $userName -Password $userPassword -Database 'master'
-Write-Host "Certificate backup was created successfully" 
+#Write-Host "Create certificate backup"
+#Invoke-Sqlcmd "BACKUP CERTIFICATE TDEServerCert TO FILE = 'C:\temp\backup\TDEServerCert'" -Username $userName -Password $userPassword -Database 'master'
+#Write-Host "Certificate backup was created successfully" 
 
 # Create logins
 Write-Host "Creating Logins and users"
