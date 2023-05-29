@@ -176,7 +176,7 @@ Some of the Azure services provisioned require a globally unique name and a “s
 | Resource Group            | one-click-PoC     |                   | [Create a Resource Group](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups)
 | SQL Server on Azure VM    | sqlvm-001         | Standard_D8s_v3   |[Provision SQL Server on Azure VM](https://learn.microsoft.com/en-us/azure/azure-sql/virtual-machines/windows/create-sql-vm-portal?view=azuresql) |
 | Azure SQL Database        | sqldb-*suffix*    | Basic             |[Create an Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal)|
-| Azure VM                  | jb-migration      | Standard_B2s      |[Create a Windows virtual machine](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal) |
+| Azure VM                  | jb-migration      | Standard_B4ms     |[Create a Windows virtual machine](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal) |
 
 ### Credential
 

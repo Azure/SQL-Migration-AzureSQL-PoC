@@ -178,7 +178,7 @@ Some of the Azure services provisioned require a globally unique name and a “s
 | Storage Account            | storage*suffix*  |                   |[Create a storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal)|
 | SQL Server on Azure VM     | sqlvm-001   | Standard_D8s_v3   |[Provision SQL Server on Azure VM](https://learn.microsoft.com/en-us/azure/azure-sql/virtual-machines/windows/create-sql-vm-portal?view=azuresql) |
 | Azure SQL Managed Instance | sqlmi-*suffix*   | GP_Gen5 8vCore    |[Create an Azure SQL Managed Instance](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/instance-create-quickstart?view=azuresql)|
-| Azure VM                  | jb-migration      | Standard_B2s      |[Create a Windows virtual machine](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal) |
+| Azure VM                  | jb-migration      | Standard_B4ms     |[Create a Windows virtual machine](https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-portal) |
 
 ### Credential
 

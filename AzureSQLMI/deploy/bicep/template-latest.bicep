@@ -629,7 +629,7 @@ resource jbVirtualMachine 'Microsoft.Compute/virtualMachines@2019-12-01' = {
       }
     }
     hardwareProfile: {
-      vmSize: 'Standard_B2s'
+      vmSize: 'Standard_B4ms'
     }
     storageProfile: {
       osDisk: {
@@ -640,8 +640,8 @@ resource jbVirtualMachine 'Microsoft.Compute/virtualMachines@2019-12-01' = {
       }
       imageReference: {
         publisher: 'MicrosoftWindowsDesktop'
-        offer: 'Windows-10'
-        sku: 'win10-21h2-pro'
+        offer: 'Windows-11'
+        sku: 'win11-22h2-pro'
         version: 'latest'
       }
     }
