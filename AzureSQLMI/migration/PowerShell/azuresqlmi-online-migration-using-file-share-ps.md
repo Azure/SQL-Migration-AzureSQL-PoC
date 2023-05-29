@@ -262,9 +262,9 @@ This script performs an [end to end migration of multiple databases in multiple 
 
 ## Page Navigator
 
-- [SQL Server migration one-click PoC to Azure SQL](README.md)
+- [SQL Server migration one-click PoC to Azure SQL](../../../README.md)
   
-- [One-click PoC to Azure SQL DB](./AzureSQLDB/deploy/README.md)
+- [One-click PoC to Azure SQL DB](../../../AzureSQLDB/deploy/README.md)
   - ***Assessment and SKU recommendation***
     - [CLI](./AzureSQLDB/assessment/CLI/azuresqldb-assessment-sku-using-cli.md)
     - [PowerShell](./AzureSQLDB/assessment/PowerShell/azuresqldb-assessment-sku-using-ps.md)
@@ -272,7 +272,7 @@ This script performs an [end to end migration of multiple databases in multiple 
     - [CLI](./AzureSQLDB/migration/CLI/azuresqldb-offline-migration-using-cli.md)
     - [PowerShell](/AzureSQLDB/migration/PowerShell/azuresqldb-offline-migration-using-ps.md)
   
-- [One-click PoC to Azure SQL MI](./AzureSQLDB/deploy/README.md)
+- [One-click PoC to Azure SQL MI](../../../AzureSQLMI/deploy/README.md)
   - ***Assessment and SKU recommendation***
     - [CLI](./AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md)
     - [PowerShell](./AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md)
