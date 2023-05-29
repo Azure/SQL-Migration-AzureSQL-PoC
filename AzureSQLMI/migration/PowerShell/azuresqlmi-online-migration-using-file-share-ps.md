@@ -1,4 +1,4 @@
-# Online migration for Azure SQL Managed Instance using File Share
+# Online migration for Azure SQL Managed Instance using File Share using PowerShell
 
 Perform online migrations of your SQL Server databases running on-premises, SQL Server on Azure Virtual Machines, or any virtual machine running in the cloud (private, public) to Azure SQL Database using the Azure SQL Migration extension.
 
