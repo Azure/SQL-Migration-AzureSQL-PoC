@@ -2,6 +2,24 @@
 Start-Transcript -Path C:\psLogs.txt -Append
 Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
+
+try {
+    Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))   
+}
+catch {
+    Write-Host "Error to install chocolatey and set execution policy"
+}
+
+try {
+    # Installing Windows Terminal
+    Write-Host "Installing Windows Terminal"
+    choco install microsoft-windows-terminal -y
+}
+catch {
+    Write-Host "Error to install Windows Terminal"
+}
+
+
 #Install Software
 Write-Host "Installing Azure Data Studio"
 choco install azure-data-studio -y
