@@ -99,7 +99,12 @@ CreateFolder $ProjectsTargetDirectory
 CreateFolder $SHIRTargetDirectory
 Write-Host "Folders were created successfully"
 
+# Adding some nuget sources
+Write-Host "Adding nuget sources"
+dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
 # Installing SqlPackage - This is not working!
+
 Write-Host "Installing SqlPackage"
 try {
     Set-Location "C:\Program Files\dotnet"
