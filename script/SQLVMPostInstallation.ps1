@@ -9,14 +9,6 @@ catch {
     Write-Host "Error to install chocolatey and set execution policy"
 }
 
-
-try {
-    Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))   
-}
-catch {
-    Write-Host "Error to install chocolatey and set execution policy"
-}
-
 try {
     # Installing Windows Terminal
     Write-Host "Installing Windows Terminal"
