@@ -99,12 +99,17 @@ CreateFolder $ProjectsTargetDirectory
 CreateFolder $SHIRTargetDirectory
 Write-Host "Folders were created successfully"
 
-# Adding some nuget sources
-Write-Host "Adding nuget sources"
-dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+# Adding some Nuget sources
+Write-Host "Adding Nuget source"
+try {
+    dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+    Write-Host "Nuget source added correctly"
+}
+catch {
+    Write-Host "Error adding Nuget source" 
+}
 
 # Installing SqlPackage - This is not working!
-
 Write-Host "Installing SqlPackage"
 try {
     Set-Location "C:\Program Files\dotnet"
@@ -112,11 +117,13 @@ try {
     $env:Path += "C:\Windows\System32\config\systemprofile\.dotnet\tools;"
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
     refreshenv
+    Write-Host "SqlPackage throught dotnet was installed successfully"
 }
 catch {
     Write-Host "Error to install SqlPackage" 
     Write-Host "Error to set variables: 'C:\Windows\System32\config\systemprofile\.dotnet\tools;'" 
 }
+
 Write-Host "Installing SqlPackage through msi"
 try {
     Invoke-WebRequest -Uri https://aka.ms/dacfx-msi -OutFile C:\temp\DacFramework.msi; 
