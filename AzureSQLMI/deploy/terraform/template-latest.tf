@@ -391,6 +391,28 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   ]
 }
 
+resource "azurerm_virtual_machine_extension" "jb_vm_extension" {
+  name                 = "CustomScriptExtension"
+  virtual_machine_id   = azurerm_windows_virtual_machine.jb_vm.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/JumpBoxPostInstallation.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpBoxPostInstallation.ps1"
+    }
+  SETTINGS
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+    read   = "60m"
+  }
+}
+
 # resource "azurerm_mssql_server" "sqlserver" {
 #   name                         = "${var.sql_server_name}-${var.suffix}"
 #   resource_group_name          = azurerm_resource_group.rg.name
