@@ -1,6 +1,6 @@
-# Install Chocolatey 
 Start-Transcript -Path C:\psLogs.txt -Append
 
+# Install Chocolatey 
 try {
     Set-ExecutionPolicy Unrestricted -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))   
 }
