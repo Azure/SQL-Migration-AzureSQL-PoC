@@ -253,9 +253,9 @@ resource virtualMachineName_CustomScriptExtension 'Microsoft.Compute/virtualMach
     typeHandlerVersion: '1.9'
     settings: {
       fileUris: [
-        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/SQLVMPostInstallation.ps1'
+        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1'
       ]
-      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File PostInstallation.ps1'
+      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1'
     }
     protectedSettings: {
     }
@@ -666,9 +666,9 @@ resource JBvirtualMachineName_CustomScriptExtension 'Microsoft.Compute/virtualMa
     typeHandlerVersion: '1.9'
     settings: {
       fileUris: [
-        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/JumpBoxPostInstallation.ps1'
+        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1'
       ]
-      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File JumpboxPostInstallation.ps1'
+      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File JumpBoxPostInstallation.ps1'
     }
     protectedSettings: {
     }

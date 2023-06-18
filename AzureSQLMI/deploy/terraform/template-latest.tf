@@ -374,7 +374,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
 
   settings = <<SETTINGS
   {
-    "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/SQLVMPostInstallation.ps1"],
+    "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1"],
     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1"
   }
   SETTINGS
@@ -400,7 +400,7 @@ resource "azurerm_virtual_machine_extension" "jb_vm_extension" {
 
   settings = <<SETTINGS
     {
-      "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/JumpBoxPostInstallation.ps1"],
+      "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1"],
       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpBoxPostInstallation.ps1"
     }
   SETTINGS

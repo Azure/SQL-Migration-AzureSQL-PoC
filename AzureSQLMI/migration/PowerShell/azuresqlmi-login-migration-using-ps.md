@@ -100,10 +100,10 @@ At this point you will need to get the Azure SQL MI name. [Get server connection
   
 - [One-click PoC to Azure SQL MI](../../../AzureSQLMI/deploy/README.md)
   - ***Assessment and SKU recommendation***
-    - [CLI](../../..//AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md)
-    - [PowerShell](../../..//AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md)
+    - [CLI](../../../AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md)
+    - [PowerShell](../../../AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md)
   - ***Offline migration using Storage Account***
-    - [CLI](../../..//AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md)
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md)
     - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-azure-storage-ps.md)
   - ***Offline migration using File Share***
     - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md)
