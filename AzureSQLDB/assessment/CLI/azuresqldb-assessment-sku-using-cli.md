@@ -1,6 +1,4 @@
-[SQL Server migration one-click PoC to Azure SQL](../../README.md) > Assessment and SKU recommendation for Azure SQL Database
-
-# Assessment and SKU recommendation for Azure SQL Database
+# Assessment and SKU recommendation for Azure SQL Database using CLI
 
 Assess your SQL Server databases for Azure SQL Database readiness or to identify any migration blockers before migrating them to Azure SQL Database.
 
@@ -15,8 +13,6 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 - Azure CLI (Already installed)
 - Az datamigration extension
 
-Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
-
 ## Getting Started
 
 > [!CAUTION]
@@ -25,21 +21,23 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
 
+Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
+
 1. Install az datamigration extension. Open either a command shell or PowerShell as administrator.
 
-    ```PowerShell
+    ```azurecli
     az extension add --name datamigration
     ```
 
 2. Run the following to log in from your client using your default web browser
 
-    ```powershell
+    ```azurecli
     az login
     ```
 
     If you have more than one subscription, you can select a particular subscription.
 
-    ```powershell
+    ```azurecli
     az account set --subscription <subscription-id>
     ```
 
@@ -47,7 +45,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 1. Run a SQL Server assessment using the ***az datamigration get-assessment*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment `
     --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -56,7 +54,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
 2. **Assessment at scale** using config file
 
-    You can also create a config file to use as a parameter to run assessment on SQL servers.The config file has the following structure:
+    You can also create a config file to use as a parameter to run assessment on SQL servers. The config file has the following structure:
 
     ```json
     {
@@ -72,11 +70,12 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
 
     The config file can be passed to the cmdlet in the following way
 
-    ```powershell
+    ```azurecli
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
     > [!TIP]
+    >
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
     Learn more about using [CLI to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
@@ -89,7 +88,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 1. Run a SQL Server performance data collection using the ***az datamigration performance-data-collection*** command.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection `
     --connection-string "Data Source=10.0.0.4,1433;Initial Catalog=master;User Id=sqladmin;Password=My`$upp3r`$ecret" `
     --output-folder "C:\temp\output" `
@@ -99,6 +98,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     ```
 
     > [!TIP]
+    >
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
@@ -123,15 +123,16 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     The config file can be passed to the cmdlet in the following way.
 
-    ```powershell
+    ```azurecli
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
     > [!TIP]
+    >
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
-    Learn more about using [CLI to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#performance-data-collection-using-connection-string)
+    Learn more about using [CLI to perform data collection](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md)
 
 ### Get SKU Recommendation
 
@@ -139,7 +140,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 1. Get SKU recommendation using the **az datamigration get-sku-recommendation** command.
 
-    ```powershell
+    ```azurecli
     az datamigration get-sku-recommendation `
     --output-folder "C:\temp\output" `
     --display-result `
@@ -149,7 +150,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     All results will be displayed after the command finishes.
 
-    ![sku-recommendation](../media/sku-recommendation.png)
+    ![sku-recommendation](/media/sqldb-sku-recommendation-cli.png)
 
 2. Get SKU recommendations at scale using a config file.
 
@@ -166,20 +167,42 @@ This step is optional. An Azure SQL DB has been already provisioned.
     }
     ```
 
-    Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#performance-data-collection-using-connection-string)
+    Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
 
 3. HTML recommendations result
 
     > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
-    ![sku-recommendation-htlm](../media/sku-recommendation-htlm.png)
+    ![sku-recommendation-html](../../../media/sqldb-sku-recommendation-html.png)
 
 ## Page Navigator
 
-[Deploy the solution for Azure SQL Database](../deploy/README.md)
-
-[Offline migration for Azure SQL Database](../migration/README.md)
-
-[SQL Server migration one-click PoC to Azure SQL](../../README.md)
-
-[Index: Table of Contents](../../index.md)
+- [SQL Server migration one-click PoC to Azure SQL](../../../README.md)
+  
+- [One-click PoC to Azure SQL DB](../../../AzureSQLDB/deploy/README.md)
+  - ***Assessment and SKU recommendation***
+    - [CLI](../../../AzureSQLDB/assessment/CLI/azuresqldb-assessment-sku-using-cli.md)
+    - [PowerShell](../../../AzureSQLDB/assessment/PowerShell/azuresqldb-assessment-sku-using-ps.md)
+  - ***Offline migration***
+    - [CLI](../../../AzureSQLDB/migration/CLI/azuresqldb-offline-migration-using-cli.md)
+    - [PowerShell](../../../AzureSQLDB/migration/PowerShell/azuresqldb-offline-migration-using-ps.md)
+  
+- [One-click PoC to Azure SQL MI](../../../AzureSQLMI/deploy/README.md)
+  - ***Assessment and SKU recommendation***
+    - [CLI](../../../AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md)
+    - [PowerShell](../../../AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md)
+  - ***Offline migration using Storage Account***
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md)
+    - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-azure-storage-ps.md)
+  - ***Offline migration using File Share***
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md)
+    - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-file-share-ps.md)
+  - ***Online migration using Storage Account***
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md)
+    - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-online-migration-using-azure-storage-ps.md)
+  - ***Online migration using File Share***
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md)
+    - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-file-share-ps.md)
+  - ***Login migration***
+    - [CLI](../../../AzureSQLMI/migration/CLI/azuresqlmi-login-migration-using-cli.md)
+    - [PowerShell](../../../AzureSQLMI/migration/PowerShell/azuresqlmi-login-migration-using-ps.md)

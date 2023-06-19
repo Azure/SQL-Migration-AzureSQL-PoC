@@ -253,9 +253,9 @@ resource virtualMachineName_CustomScriptExtension 'Microsoft.Compute/virtualMach
     typeHandlerVersion: '1.9'
     settings: {
       fileUris: [
-        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/AzureSQLMI/deploy/PostInstallation.ps1'
+        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1'
       ]
-      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File PostInstallation.ps1'
+      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1'
     }
     protectedSettings: {
     }
@@ -629,7 +629,7 @@ resource jbVirtualMachine 'Microsoft.Compute/virtualMachines@2019-12-01' = {
       }
     }
     hardwareProfile: {
-      vmSize: 'Standard_B2s'
+      vmSize: 'Standard_B4ms'
     }
     storageProfile: {
       osDisk: {
@@ -640,8 +640,8 @@ resource jbVirtualMachine 'Microsoft.Compute/virtualMachines@2019-12-01' = {
       }
       imageReference: {
         publisher: 'MicrosoftWindowsDesktop'
-        offer: 'Windows-10'
-        sku: 'win10-21h2-pro'
+        offer: 'Windows-11'
+        sku: 'win11-22h2-pro'
         version: 'latest'
       }
     }
@@ -666,9 +666,9 @@ resource JBvirtualMachineName_CustomScriptExtension 'Microsoft.Compute/virtualMa
     typeHandlerVersion: '1.9'
     settings: {
       fileUris: [
-        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/AzureSQLMI/deploy/JumpboxPostInstallation.ps1'
+        'https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1'
       ]
-      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File JumpboxPostInstallation.ps1'
+      commandToExecute: 'powershell.exe -ExecutionPolicy Unrestricted -File JumpBoxPostInstallation.ps1'
     }
     protectedSettings: {
     }

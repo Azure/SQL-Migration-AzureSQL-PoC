@@ -374,8 +374,8 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
 
   settings = <<SETTINGS
   {
-    "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/AzureSQLMI/deploy/PostInstallation.ps1"],
-    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File PostInstallation.ps1"
+    "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1"],
+    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1"
   }
   SETTINGS
 
@@ -389,6 +389,28 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   depends_on = [
     azurerm_mssql_virtual_machine.sql_vm
   ]
+}
+
+resource "azurerm_virtual_machine_extension" "jb_vm_extension" {
+  name                 = "CustomScriptExtension"
+  virtual_machine_id   = azurerm_windows_virtual_machine.jb_vm.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": ["https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpBoxPostInstallation.ps1"
+    }
+  SETTINGS
+
+  timeouts {
+    create = "60m"
+    update = "60m"
+    delete = "60m"
+    read   = "60m"
+  }
 }
 
 # resource "azurerm_mssql_server" "sqlserver" {
@@ -505,7 +527,7 @@ resource "azurerm_windows_virtual_machine" "jb_vm" {
   name                = var.jb_vm_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.resource_group_location
-  size                = "Standard_B2s"
+  size                = "Standard_B4ms"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
   network_interface_ids = [
@@ -519,8 +541,8 @@ resource "azurerm_windows_virtual_machine" "jb_vm" {
 
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-10"
-    sku       = "win10-21h2-pro"
+    offer     = "Windows-11"
+    sku       = "win11-22h2-pro"
     version   = "latest"
   }
 }
