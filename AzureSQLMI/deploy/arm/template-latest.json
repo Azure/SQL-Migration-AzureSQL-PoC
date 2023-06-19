@@ -308,7 +308,7 @@
                 "settings": {
                     "fileUris": [
                         "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/SQLVMPostInstallation.ps1"
-                        
+                       ], 
                     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File SQLVMPostInstallation.ps1"
                 },
 
@@ -774,7 +774,7 @@
                 "protectedSettings": {}
             }
         }
-        // END JUMP BOM
+        // END JUMP BOX
     ],
     "outputs": {
     }
