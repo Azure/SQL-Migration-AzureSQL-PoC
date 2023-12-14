@@ -141,9 +141,9 @@ catch {
 try {
     # Downaloading and installig Integration Runtime
     Write-Host "Downloading Integration Runtime"
-    Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.29.8528.1.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.29.8528.1.msi; 
+    Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.36.8726.3.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi; 
     Write-Host "Installing Integration Runtime"
-    Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.29.8528.1.msi /quiet'; 
+    Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi /quiet'; 
  }
 catch {
     Write-Host "Error to install Integration Runtime"
