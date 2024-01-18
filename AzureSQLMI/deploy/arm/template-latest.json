@@ -124,6 +124,9 @@
             "sku": {
                 "name": "Standard_LRS"
             },
+            "properties": {
+                "allowBlobPublicAccess": true
+            },
             "kind": "Storage"
         },
         {
