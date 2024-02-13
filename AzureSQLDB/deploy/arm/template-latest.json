@@ -394,7 +394,8 @@
             "name": "[concat(variables('virtualMachineName'), '/CustomScriptExtension')]",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
+                "[resourceId('Microsoft.SqlVirtualMachine/sqlVirtualMachines', variables('virtualMachineName'))]"
             ],
             "properties": {
                 "autoUpgradeMinorVersion": true,
