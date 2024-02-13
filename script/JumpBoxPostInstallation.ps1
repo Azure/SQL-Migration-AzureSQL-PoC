@@ -62,6 +62,7 @@ try {
     Install-PackageProvider -Name NuGet -Force -Confirm:$false
     Install-Module -Name Az.DataMigration -Force -Confirm:$false 
     Write-Host "Az.DataMigration was installed successfully"
+   
 }
 catch {
     Write-Host "Error to install PowerShell module"

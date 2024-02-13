@@ -19,9 +19,6 @@ function CreateFolder {
     
 }
 
-#Download File
-$FileName1 = "AdventureWorks2019.bak"
-
 #Destination Path
 Write-Host "Creating folders"
 $localTargetDirectory = "C:\temp\1clickPoC"
@@ -36,19 +33,30 @@ Write-Host "Folders were created successfully"
 #Download Blob to the Destination Path 
 Write-Host "Downloading file"
 try {
-    $finalPath = $localTargetDirectory + "\" + $FileName1
-    $wc = New-Object net.webclient
+    $backupTarget = "C:\temp\backup\AdventureWorks2019.bak"
     $database_url = "https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak"
-    $wc.Downloadfile($database_url, $finalPath)
+    $wc = New-Object net.webclient
+    $wc.Downloadfile($database_url, $backupTarget)
 
     #Invoke-WebRequest 'https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak' -OutFile $finalPath
-    Write-Host "File AdventureWorks2019.bak was downloaded successfully"    
+    Write-Host "File AdventureWorks2019.bak was downloaded successfully"   
+
 }
 catch {
     
     Write-Host "Error downloading AdventureWorks2019.bak"
 }
 
+try {
+    Write-Host "Installing PowerShell module"
+    Install-PackageProvider -Name NuGet -Force -Confirm:$false
+    Install-Module -Name SqlServer -Confirm:$false -Force -AllowClobber 
+    Write-Host "PowerShell module SqlServer was installed successfully"
+   
+}
+catch {
+    Write-Host "Error to install PowerShell module"
+}
 
 # Define clear text string for username and password
 [string]$userName = 'sqladmin'
@@ -63,10 +71,13 @@ try {
     Get-Service -Name $instance | Restart-Service
     Write-Host "SQL Server was restarted"
     Write-Host "Configuring Filestream"
-    Import-Module "sqlps" -DisableNameChecking
+    Import-Module "SqlServer" -DisableNameChecking
+    
     #Invoke-Sqlcmd "EXEC sp_configure filestream_access_level, 2" -Username $userName -Password $userPassword
     Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "EXEC sp_configure filestream_access_level, 2"
+    
     Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RECONFIGURE"
+    
     #Invoke-Sqlcmd "RECONFIGURE" -Username $userName -Password $userPassword
     Write-Host "Filestream was configured successfully"
 }
