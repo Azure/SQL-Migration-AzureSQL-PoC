@@ -33,7 +33,7 @@ Write-Host "Folders were created successfully"
 #Download Blob to the Destination Path 
 Write-Host "Downloading file"
 try {
-    $backupTarget = "C:\temp\backup\AdventureWorks2019.bak"
+    $backupTarget = "C:\temp\1clickPoC\AdventureWorks2019.bak"
     $database_url = "https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak"
     $wc = New-Object net.webclient
     $wc.Downloadfile($database_url, $backupTarget)
@@ -127,7 +127,7 @@ try {
     GO
 '@
 
-    Invoke-Sqlcmd -ServerInstance "localhost" -Database 'AdventureWorks_with_issues' -Username $userName -Password $userPassword -Query $query
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database 'AdventureWorks_with_issues' -Username $userName -Password $userPassword -Query $query -trustservercertificate
  
 
     #Invoke-Sqlcmd -Query $query -Username $userName -Password $userPassword -Database 'AdventureWorks_with_issues'
