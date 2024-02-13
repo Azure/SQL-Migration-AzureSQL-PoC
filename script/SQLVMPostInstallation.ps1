@@ -37,7 +37,11 @@ Write-Host "Folders were created successfully"
 Write-Host "Downloading file"
 try {
     $finalPath = $localTargetDirectory + "\" + $FileName1
-    Invoke-WebRequest 'https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak' -OutFile $finalPath
+    $wc = New-Object net.webclient
+    $database_url = "https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak"
+    $wc.Downloadfile($database_url, $finalPath)
+
+    #Invoke-WebRequest 'https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2019.bak' -OutFile $finalPath
     Write-Host "File AdventureWorks2019.bak was downloaded successfully"    
 }
 catch {

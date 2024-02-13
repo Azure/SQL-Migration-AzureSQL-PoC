@@ -48,13 +48,14 @@ catch {
     choco install azure-cli -y
     Write-Host "Azure CLI was installed successfully"
 
-    $env:Path += "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;"
+    #$env:Path += "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;"
+    $env:Path += "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;" 
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
     refreshenv   
 }
 catch {
     Write-Host "Error to install Azure Data Studio or Azure CLI"
-    Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;'"
+    Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;'"
 }
 
 try {
@@ -125,8 +126,16 @@ catch {
 }
 
 Write-Host "Installing SqlPackage through msi"
+$wc = New-Object net.webclient
+
 try {
-    Invoke-WebRequest -Uri https://aka.ms/dacfx-msi -OutFile C:\temp\DacFramework.msi; 
+    Write-Host "Downloading DacFx Framework"
+    $dacfx_url = "https://aka.ms/dacfx-msi"
+    $local_dacfx_file = "C:\temp\DacFramework.msi"
+    $wc.Downloadfile($dacfx_url, $local_dacfx_file)
+
+    #Invoke-WebRequest -Uri https://aka.ms/dacfx-msi -OutFile C:\temp\DacFramework.msi; 
+    Write-Host "Installing DacFx Framework"
     Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\DacFramework.msi /quiet'; 
     $env:Path += "C:\Program Files\Microsoft SQL Server\160\DAC\bin;"
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
@@ -140,10 +149,16 @@ catch {
 
 try {
     # Downaloading and installig Integration Runtime
+
+    $dacfx_url = "https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.38.8794.1.msi"
+    $local_dacfx_file = "C:\temp\SHIR\IntegrationRuntime_5.38.8794.1.msi"
+    $wc.Downloadfile($dacfx_url, $local_dacfx_file)
+
+
     Write-Host "Downloading Integration Runtime"
-    Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.36.8726.3.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi; 
+    # Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.36.8726.3.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi; 
     Write-Host "Installing Integration Runtime"
-    Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi /quiet'; 
+    Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.38.8794.1.msi /quiet'; 
  }
 catch {
     Write-Host "Error to install Integration Runtime"
