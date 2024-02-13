@@ -64,8 +64,10 @@ try {
     Write-Host "SQL Server was restarted"
     Write-Host "Configuring Filestream"
     Import-Module "sqlps" -DisableNameChecking
-    Invoke-Sqlcmd "EXEC sp_configure filestream_access_level, 2" -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "RECONFIGURE" -Username $userName -Password $userPassword
+    #Invoke-Sqlcmd "EXEC sp_configure filestream_access_level, 2" -Username $userName -Password $userPassword
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "EXEC sp_configure filestream_access_level, 2"
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RECONFIGURE"
+    #Invoke-Sqlcmd "RECONFIGURE" -Username $userName -Password $userPassword
     Write-Host "Filestream was configured successfully"
 }
 catch {
@@ -75,9 +77,13 @@ catch {
 # Restore Databases
 try {
     Write-Host "Restoring database"
-    Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorks2019] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks2019.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks2019_log.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorks_with_issues] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks_with_issues.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks_with_issues.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorksTDE] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorksTDE.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorksTDE.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RESTORE DATABASE [AdventureWorks2019] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks2019.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks2019_log.ldf', NOUNLOAD, STATS = 5;"
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RESTORE DATABASE [AdventureWorks_with_issues] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks_with_issues.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks_with_issues.ldf', NOUNLOAD, STATS = 5;"
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RESTORE DATABASE [AdventureWorksTDE] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorksTDE.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorksTDE.ldf', NOUNLOAD, STATS = 5;"
+    
+    #Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorks2019] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks2019.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks2019_log.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
+    #Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorks_with_issues] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorks_with_issues.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorks_with_issues.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
+    #Invoke-Sqlcmd "RESTORE DATABASE [AdventureWorksTDE] FROM DISK = N'C:\temp\1clickPoC\AdventureWorks2019.bak' WITH FILE = 1 , MOVE N'AdventureWorks2019'  TO N'F:\SQLData\AdventureWorksTDE.mdf', MOVE N'AdventureWorks2019_log' TO N'G:\SQLLog\AdventureWorksTDE.ldf', NOUNLOAD, STATS = 5;" -Username $userName -Password $userPassword
     Write-Host "Databases were restored successfully" 
 }
 catch {
@@ -86,8 +92,12 @@ catch {
 # Create some issues for migration
 try {
     Write-Host "Create databases issues for migration" 
-    Invoke-Sqlcmd "ALTER DATABASE [AdventureWorks_with_issues] ADD FILEGROUP [Filestream_data] CONTAINS FILESTREAM " -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "ALTER DATABASE [AdventureWorks_with_issues] ADD FILE ( NAME = N'AdventureWorks_fs', FILENAME = N'F:\SQLData\AdventureWorks_fs' ) TO FILEGROUP [Filestream_data]" -Username $userName -Password $userPassword
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "ALTER DATABASE [AdventureWorks_with_issues] ADD FILEGROUP [Filestream_data] CONTAINS FILESTREAM"
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "ALTER DATABASE [AdventureWorks_with_issues] ADD FILE ( NAME = N'AdventureWorks_fs', FILENAME = N'F:\SQLData\AdventureWorks_fs' ) TO FILEGROUP [Filestream_data]"
+    
+
+    #Invoke-Sqlcmd "ALTER DATABASE [AdventureWorks_with_issues] ADD FILEGROUP [Filestream_data] CONTAINS FILESTREAM " -Username $userName -Password $userPassword
+    #Invoke-Sqlcmd "ALTER DATABASE [AdventureWorks_with_issues] ADD FILE ( NAME = N'AdventureWorks_fs', FILENAME = N'F:\SQLData\AdventureWorks_fs' ) TO FILEGROUP [Filestream_data]" -Username $userName -Password $userPassword
 
     $query = @'
     CREATE TABLE [dbo].[Photos](
@@ -106,7 +116,10 @@ try {
     GO
 '@
 
-    Invoke-Sqlcmd -Query $query -Username $userName -Password $userPassword -Database 'AdventureWorks_with_issues'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database 'AdventureWorks_with_issues' -Username $userName -Password $userPassword -Query $query
+ 
+
+    #Invoke-Sqlcmd -Query $query -Username $userName -Password $userPassword -Database 'AdventureWorks_with_issues'
     Write-Host "Database with issues was created successfully" 
     
 }
@@ -117,19 +130,25 @@ catch {
 # TDE
 try {
     Write-Host "Create master key" 
-    Invoke-Sqlcmd "CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'SQLMigration@TDE'" -Username $userName -Password $userPassword -Database 'master'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'SQLMigration@TDE'"
+    #Invoke-Sqlcmd "CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'SQLMigration@TDE'" -Username $userName -Password $userPassword -Database master
     Write-Host "Master key was created successfully"
     Write-Host "Create certificate"
-    Invoke-Sqlcmd "CREATE CERTIFICATE TDEServerCert WITH SUBJECT = 'DEK Certificate'" -Username $userName -Password $userPassword -Database 'master'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "CREATE CERTIFICATE TDEServerCert WITH SUBJECT = 'DEK Certificate'"
+    #Invoke-Sqlcmd "CREATE CERTIFICATE TDEServerCert WITH SUBJECT = 'DEK Certificate'" -Username $userName -Password $userPassword -Database master
     Write-Host "Certificate was created successfully"
     Write-Host "Create database encryption"
-    Invoke-Sqlcmd "CREATE DATABASE ENCRYPTION KEY WITH ALGORITHM = AES_256 ENCRYPTION BY SERVER CERTIFICATE TDEServerCert" -Username $userName -Password $userPassword -Database 'AdventureWorksTDE'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database 'AdventureWorksTDE' -Username $userName -Password $userPassword -Query "CREATE DATABASE ENCRYPTION KEY WITH ALGORITHM = AES_256 ENCRYPTION BY SERVER CERTIFICATE TDEServerCert"
+    #Invoke-Sqlcmd "CREATE DATABASE ENCRYPTION KEY WITH ALGORITHM = AES_256 ENCRYPTION BY SERVER CERTIFICATE TDEServerCert" -Username $userName -Password $userPassword -Database 'AdventureWorksTDE'
     Write-Host "Database encryption was created successfully"
     Write-Host "Enable TDE"
-    Invoke-Sqlcmd "ALTER DATABASE AdventureWorksTDE SET ENCRYPTION ON" -Username $userName -Password $userPassword -Database 'AdventureWorksTDE'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database 'AdventureWorksTDE' -Username $userName -Password $userPassword -Query "ALTER DATABASE AdventureWorksTDE SET ENCRYPTION ON"
+    #Invoke-Sqlcmd "ALTER DATABASE AdventureWorksTDE SET ENCRYPTION ON" -Username $userName -Password $userPassword -Database 'AdventureWorksTDE'
     Write-Host "TDE was enable successfully" 
     Write-Host "Create certificate backup"
-    Invoke-Sqlcmd "BACKUP CERTIFICATE TDEServerCert TO FILE = 'C:\temp\1clickPoC\TDEServerCert'" -Username $userName -Password $userPassword -Database 'master'
+    Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "BACKUP CERTIFICATE TDEServerCert TO FILE = 'C:\temp\1clickPoC\TDEServerCert'"
+    
+    #Invoke-Sqlcmd "BACKUP CERTIFICATE TDEServerCert TO FILE = 'C:\temp\1clickPoC\TDEServerCert'" -Username $userName -Password $userPassword -Database master
     Write-Host "Certificate backup was created successfully" 
         
 }
@@ -142,9 +161,9 @@ try {
     
     # Create logins
     Write-Host "Creating Logins and users"
-    Invoke-Sqlcmd "CREATE LOGIN sqlpoc WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "CREATE LOGIN sqlpocapp WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword
-    Invoke-Sqlcmd "CREATE LOGIN sqlpocreport WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword
+    Invoke-Sqlcmd "CREATE LOGIN sqlpoc WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword -Database master 
+    Invoke-Sqlcmd "CREATE LOGIN sqlpocapp WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword -Database master 
+    Invoke-Sqlcmd "CREATE LOGIN sqlpocreport WITH PASSWORD = 'HavingFun@123' " -Username $userName -Password $userPassword -Database master 
 
     # Create users in the AdventureWorks2019 database
     Invoke-Sqlcmd "CREATE USER sqlpoc FOR LOGIN sqlpoc" -Username $userName -Password $userPassword -Database 'AdventureWorks2019'

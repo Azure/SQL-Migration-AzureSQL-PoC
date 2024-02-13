@@ -9,16 +9,6 @@ catch {
 }
 
 try {
-    # Installing Windows Terminal
-    Write-Host "Installing Windows Terminal"
-    choco install microsoft-windows-terminal -y
-}
-catch {
-    Write-Host "Error to install Windows Terminal"
-}
-
-
-try {
     # Install dotnet 
     Write-Host "Installing DotNet Core"
     choco install dotnetcore -y
@@ -56,6 +46,15 @@ catch {
 catch {
     Write-Host "Error to install Azure Data Studio or Azure CLI"
     Write-Host "Error to set variables: 'C:\Program Files\dotnet;' and 'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;'"
+}
+
+try {
+    # Installing Windows Terminal
+    Write-Host "Installing Windows Terminal"
+    choco install microsoft-windows-terminal -y
+}
+catch {
+    Write-Host "Error to install Windows Terminal"
 }
 
 try {
@@ -149,13 +148,13 @@ catch {
 
 try {
     # Downaloading and installig Integration Runtime
-
+    Write-Host "Downloading Integration Runtime"
     $dacfx_url = "https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.38.8794.1.msi"
     $local_dacfx_file = "C:\temp\SHIR\IntegrationRuntime_5.38.8794.1.msi"
     $wc.Downloadfile($dacfx_url, $local_dacfx_file)
 
 
-    Write-Host "Downloading Integration Runtime"
+    
     # Invoke-WebRequest -Uri https://download.microsoft.com/download/E/4/7/E4771905-1079-445B-8BF9-8A1A075D8A10/IntegrationRuntime_5.36.8726.3.msi -OutFile C:\temp\SHIR\IntegrationRuntime_5.36.8726.3.msi; 
     Write-Host "Installing Integration Runtime"
     Start-Process msiexec.exe -Wait -ArgumentList '/I C:\temp\SHIR\IntegrationRuntime_5.38.8794.1.msi /quiet'; 
