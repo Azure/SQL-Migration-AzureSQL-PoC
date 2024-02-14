@@ -15,11 +15,12 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 
 ## Getting Started
 
->[!CAUTION]
+> [!CAUTION]
 >
 > - **Connect to the Jump Box VM**
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
+>
 
 Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
@@ -74,7 +75,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
-    >[!IMPORTANT]
+    > [!NOTE]
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
     Learn more about using [CLI to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
@@ -96,8 +97,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     --static-query-interval 120
     ```
 
-    >[!IMPORTANT]
-    >
+    > [!NOTE]
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
@@ -126,8 +126,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
-    >[!IMPORTANT]
-    >
+    > [!NOTE]
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
