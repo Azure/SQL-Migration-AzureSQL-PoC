@@ -177,10 +177,8 @@ This step is optional. An Azure SQL DB has been already provisioned.
     1. Select Azure SQL Migration
     1. To import the assessment, navigate to the directory "C:\temp\Output" and locate a JSON file named "SqlAssessmentReport-*.json".
     ![ads-assessment-sku-recommendation-01](/media/ads-assessment-sku-recommendation-01.png)
-    1. Select all databases
-
-    ![ads-assessment-sku-recommendation-02](/media/ads-assessment-sku-recommendation-02.png)
     1. Click Next
+    1. Select all databases
     1. To import the performance data, simply navigate to the directory "C:\temp\Output" and select this folder.
     ![ads-assessment-sku-recommendation-03](/media/ads-assessment-sku-recommendation-03.png)
     1. Review SKU recommendation
