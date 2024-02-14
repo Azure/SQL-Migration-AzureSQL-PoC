@@ -179,7 +179,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     ![aa](/media/ads-assesment-sku-recommendation-01.png)
     1. Select all databases
     1. Click Next
-        ![aa](/media/ads-assesment-sku-recommendation-02.png)
+    ![aa](/media/ads-assesment-sku-recommendation-02.png)
     1. To import the performance data, simply navigate to the directory "C:\temp\Output" and select this folder.
     ![aa](/media/ads-assesment-sku-recommendation-03.png)
     1. Review SKU recommendation
