@@ -167,7 +167,7 @@ catch {
 try {
     # add extension
     Write-Host "Adding AZ extension"
-    az extension add --name datamigration --verbose
+    az extension add --name datamigration --system
 }
 catch {
     Write-Host "Error to add datamigration AZ extension "
