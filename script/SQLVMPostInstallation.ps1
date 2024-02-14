@@ -25,7 +25,7 @@ Write-Host "Creating folders"
 $backupTargetDirectory = "C:\temp\backup"
 
 #Create Folders
-CreateFolder $localTargetDirectory
+#CreateFolder $localTargetDirectory
 CreateFolder $backupTargetDirectory
 
 Write-Host "Folders were created successfully"
