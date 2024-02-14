@@ -21,13 +21,10 @@ function CreateFolder {
 
 #Destination Path
 Write-Host "Creating folders"
-#$localTargetDirectory = "C:\temp\1clickPoC"
 $backupTargetDirectory = "C:\temp\backup"
 
 #Create Folders
-#CreateFolder $localTargetDirectory
 CreateFolder $backupTargetDirectory
-
 Write-Host "Folders were created successfully"
 
 #Download Blob to the Destination Path 
@@ -75,7 +72,6 @@ try {
     
     #Invoke-Sqlcmd "EXEC sp_configure filestream_access_level, 2" -Username $userName -Password $userPassword
     Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "EXEC sp_configure filestream_access_level, 2" -TrustServerCertificate
-    
     Invoke-Sqlcmd -ServerInstance "localhost" -Database master -Username $userName -Password $userPassword -Query "RECONFIGURE" -TrustServerCertificate
     
     #Invoke-Sqlcmd "RECONFIGURE" -Username $userName -Password $userPassword
