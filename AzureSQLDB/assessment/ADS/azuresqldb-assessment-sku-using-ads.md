@@ -27,7 +27,7 @@ The [Azure SQL migration extension for Azure Data Studio](https://learn.microsof
 - Locate the "Azure SQL Migration" extension from the search results.
 - Click on the "Install" button next to the extension to begin the installation process.
 
-![a](../../../media/ADS/ads-assessment-install-extension.png)
+![ads-assessment-install-extension](../../../media/ADS/ads-assessment-install-extension.png)
 
 ## Connecting to SQL Server
 
@@ -40,7 +40,7 @@ After successfully installing the extension, follow these steps to connect to th
 - Set "Trust server certificate" to "True".
 - Click "Connect" to establish the connection to the SQL Server.
 
-![a](/media/ADS/ads-assessment-connect-sql.png)
+![ads-assessment-connect-sql](/media/ADS/ads-assessment-connect-sql.png)
 
 After establishing the connection, the Manage page will appear.
 
