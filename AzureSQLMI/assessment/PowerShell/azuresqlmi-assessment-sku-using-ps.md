@@ -103,7 +103,7 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
     The config file can be passed to the cmdlet in the following way.
 
     ```powershell
-    Get-AzDataMigrationAssessment -ConfigFilePath "C:\Users\user\document\config.json" 
+    Get-AzDataMigrationPerformanceDataCollection -ConfigFilePath "C:\Users\user\document\config.json" 
     ```
 
     > [!TIP]
