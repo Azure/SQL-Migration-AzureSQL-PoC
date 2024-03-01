@@ -151,29 +151,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
 ### View Assessment & SKU Recommendation
 
-1. **Azure Data Studio**
-
-    Azure Data Studio now has the capability to import your results, allowing you to visualize them effortlessly.
-
-    - Connect to SQL Server - 10.0.0.4
-    - Select Azure SQL Migration
-    - To import the assessment, navigate to the directory "C:\temp\Output" and locate a JSON file named "SqlAssessmentReport-*.json".
-    ![ads-assessment-sku-recommendation-01](/media/ads-assessment-sku-recommendation-01.png)
-    - Select all databases and click Next
-    ![ads-assessment-sku-recommendation-02](/media/ads-assessment-sku-recommendation-02.png)
-    - To import the performance data, simply navigate to the directory "C:\temp\Output" and select this folder.
-    ![ads-assessment-sku-recommendation-03](/media/ads-assessment-sku-recommendation-03.png)
-    - Review SKU recommendation
-    ![ads-assessment-sku-recommendation-04](/media/ads-assessment-sku-recommendation-04.png)
-    - Click Next
-    - Review the assessment
-    - Choose the target platform "Azure SQL Database" and then select the database to view all findings. For specific details on any particular issue, select that issue to see all related information.
-    ![ads-assessment-sku-recommendation-04](/media/ads-assessment-sku-recommendation-05.png)
-
-    > [!IMPORTANT]
-    > No need to proceed with the migration at the moment. Instead, you can review your assessment and SKU recommendations.
-
-2. **HTML recommendations result**
+1. **HTML recommendations result**
 
     You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 

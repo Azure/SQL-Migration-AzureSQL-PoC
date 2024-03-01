@@ -166,9 +166,11 @@ This step is optional. An Azure SQL Managed Instance has been already provisione
 
     Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
 
-3. HTML recommendations result
+### View Assessment & SKU Recommendation
 
-    > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
+1. **HTML recommendations result**
+
+    You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
     ![sqlmi-sku-recommendation-html](../../../media/sqlmi-sku-recommendation-html.png)
 
