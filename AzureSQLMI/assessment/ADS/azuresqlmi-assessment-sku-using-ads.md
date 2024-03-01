@@ -1,6 +1,6 @@
-# Assessment and SKU recommendation for Azure SQL Database using Azure Data Studio
+# Assessment and SKU recommendation for Azure SQL Managed Instance using Azure Data Studio
 
-Assess your SQL Server databases for Azure SQL Database readiness or to identify any migration blockers before migrating them to Azure SQL Database.
+Assess your SQL Server databases for Azure SQL Managed Instance readiness or to identify any migration blockers before migrating them to Azure SQL Managed Instance.
 
 [Azure Data Studio](https://learn.microsoft.com/en-us/azure-data-studio/what-is-azure-data-studio) is a unified tooling experience for data professionals.
 Designed to focus on the functionality data platform developers use the most, Azure Data Studio offers additional experiences available as optional extensions. It's built for data professionals who use SQL Server and Azure databases on-premises or in multicloud environments.
@@ -35,12 +35,12 @@ After successfully installing the extension, follow these steps to connect to th
 
 - Navigate to the "Connections" tab in the top menu.
 - Click on "New Connection" to open the connection dialog.
-- In the "Server" field, enter the following: `10.0.0.4`
+- In the "Server" field, enter the following: `10.1.0.4`
 - Choose "Windows Authentication" as the authentication type.
 - Set "Trust server certificate" to "True".
 - Click "Connect" to establish the connection to the SQL Server.
 
-![ads-assessment-connect-sql](/media/ADS/ads-sqldb-assessment-connect-sql.png)
+![ads-assessment-connect-sql](/media/ADS/ads-sqlmi-assessment-connect-sql.png)
 
 After establishing the connection, the Manage page will appear.
 
@@ -55,13 +55,13 @@ After accessing the home page of Azure SQL Migration, follow these steps:
 - Choose all databases that you want to include in the assessment.
 - Click "Next" to proceed to the next step in the migration process.
 
-![ads-assessment-migration-extension-home](/media/ADS/ads-sqldb-assessment-migration-extension-home.png)
+![ads-assessment-migration-extension-home](/media/ADS/ads-sqlmi-assessment-migration-extension-home.png)
 
 - Click on the checkbox to select all databases available for assessment.
 - Alternatively, individually check the checkboxes next to each database to select them manually.
 - Once all databases are selected, proceed to the next step in the migration process.
 
-![ads-assessment-select-databases](/media/ADS/ads-sqldb-assessment-select-databases.png)
+![ads-assessment-select-databases](/media/ADS/ads-sqlmi-assessment-select-databases.png)
 
 ## Performance data collection and SKU recommendation
 
@@ -69,29 +69,29 @@ After accessing the home page of Azure SQL Migration, follow these steps:
 - To begin collecting data from your databases to determine the best SKU, click on "Start Data Collection". This will initiate the data collection process.
 - Alternatively, if you have already collected data, you can import it.
 
-![ads-assessment-summary](/media/ADS/ads-sqldb-assessment-summary.png)
+![ads-assessment-summary](/media/ADS/ads-sqlmi-assessment-summary.png)
 
 - You need to wait for approximately 10 minutes before you can start seeing recommendations.
 - After this time, you'll be able to explore the SKU recommendations.
 - To stop collecting data, click on "Stop Data Collection".
 
-![ads-assessment-sku-recommendation.png](/media/ADS/ads-sqldb-assessment-sku-recommendation.png)
+![ads-assessment-sku-recommendation.png](/media/ADS/ads-sqlmi-assessment-sku-recommendation.png)
 
 - When you click on "View Details," you'll access a detailed report for the SKU recommended.
 - Additionally, you have the option to save the recommendation report.
 
-![ads-assessment-sku-recommendation-view-details.png](/media/ADS/ads-sqldb-assessment-sku-recommendation-view-details.png)
+![ads-assessment-sku-recommendation-view-details.png](/media/ADS/ads-sqlmi-assessment-sku-recommendation-view-details.png)
 
 ## Reviewing the assessment
 
 After reviewing the SKU recommendation, click on the "Close" button to return to the summary page. From there, proceed by clicking "Next" to review any issues or blockers.
 
-- Select "Azure SQL Database" as the target type.
-- Navigate to the database named "AdventureWorks_with_issues".
+- Select "Azure SQL Managed Instance" as the target type.
+- Navigate to the database named "AdventureWorksTDE".
 - Click on the findings to view detailed information about the issues.
 - Review issues or blockers for a specific database.
 
-![ads-assessment-target-platform](/media/ADS/ads-sqldb-assessment-target-platform.png)
+![ads-assessment-target-platform](/media/ADS/ads-sqlmi-assessment-target-platform.png)
 
 You can save your assessment and review it later.
 
