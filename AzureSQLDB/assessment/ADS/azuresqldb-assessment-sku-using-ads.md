@@ -55,13 +55,13 @@ After accessing the home page of Azure SQL Migration, follow these steps:
 - Choose all databases that you want to include in the assessment.
 - Click "Next" to proceed to the next step in the migration process.
 
-![ads-assessment-migration-extension-home](/media/ADS/ads-assessment-migration-extension-home.png)
+![ads-assessment-migration-extension-home](/media/ADS/ads-sqldb-assessment-migration-extension-home.png)
 
 - Click on the checkbox to select all databases available for assessment.
 - Alternatively, individually check the checkboxes next to each database to select them manually.
 - Once all databases are selected, proceed to the next step in the migration process.
 
-![ads-assessment-select-databases](/media/ADS/ads-assessment-select-databases.png)
+![ads-assessment-select-databases](/media/ADS/ads-sqldb-assessment-select-databases.png)
 
 ## Performance data collection and SKU recommendation
 
@@ -69,18 +69,18 @@ After accessing the home page of Azure SQL Migration, follow these steps:
 - To begin collecting data from your databases to determine the best SKU, click on "Start Data Collection". This will initiate the data collection process.
 - Alternatively, if you have already collected data, you can import it.
 
-![ads-assessment-summary](/media/ADS/ads-assessment-summary.png)
+![ads-assessment-summary](/media/ADS/ads-sqldb-assessment-summary.png)
 
 - You need to wait for approximately 10 minutes before you can start seeing recommendations.
 - After this time, you'll be able to explore the SKU recommendations.
 - To stop collecting data, click on "Stop Data Collection".
 
-![ads-assessment-sku-recommendation.png](/media/ADS/ads-assessment-sku-recommendation.png)
+![ads-assessment-sku-recommendation.png](/media/ADS/ads-sqldb-assessment-sku-recommendation.png)
 
 - When you click on "View Details," you'll access a detailed report for the SKU recommended.
 - Additionally, you have the option to save the recommendation report.
 
-![ads-assessment-sku-recommendation-view-details.png](/media/ADS/ads-assessment-sku-recommendation-view-details.png)
+![ads-assessment-sku-recommendation-view-details.png](/media/ADS/ads-sqldb-assessment-sku-recommendation-view-details.png)
 
 ## Reviewing the assessment
 
@@ -91,7 +91,7 @@ After reviewing the SKU recommendation, click on the "Close" button to return to
 - Click on the findings to view detailed information about the issues.
 - Review issues or blockers for a specific database.
 
-![ads-assessment-target-platform](/media/ADS/ads-assessment-target-platform.png)
+![ads-assessment-target-platform](/media/ADS/ads-sqldb-assessment-target-platform.png)
 
 You can save your assessment and review it later.
 

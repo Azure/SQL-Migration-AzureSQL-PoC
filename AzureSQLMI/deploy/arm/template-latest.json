@@ -301,7 +301,8 @@
             "name": "[concat(variables('virtualMachineName'), '/CustomScriptExtension')]",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
+                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
+                "[resourceId('Microsoft.SqlVirtualMachine/sqlVirtualMachines', variables('virtualMachineName'))]"
             ],
             "properties": {
                 "autoUpgradeMinorVersion": true,
@@ -768,8 +769,8 @@
                 "typeHandlerVersion": "1.9",
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1"
-                        
+                        "https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/new-features-3.0/script/JumpBoxPostInstallation.ps1"
+                      //"https://raw.githubusercontent.com/Azure/SQL-Migration-AzureSQL-PoC/main/script/JumpBoxPostInstallation.ps1"    
                     ],
                     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File JumpboxPostInstallation.ps1"
                 },
