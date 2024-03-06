@@ -20,6 +20,7 @@ In addition, the Azure CLI command [az datamigration](https://learn.microsoft.co
 > - **Connect to the Jump Box VM**
 > - VM name: **jb-migration**
 > - Use the credentials provided on the deploy page.
+>
 
 Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us). It is already installed in the VM and by default it uses PowerShell.
 
@@ -74,8 +75,7 @@ Open a [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX
     az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
     ```
 
-    > [!TIP]
-    >
+    > [!NOTE]
     > To view the report, go to **C:\temp\output** folder and check the json file.
 
     Learn more about using [CLI to assess SQL Server](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-assessment.md)
@@ -97,8 +97,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     --static-query-interval 120
     ```
 
-    > [!TIP]
-    >
+    > [!NOTE]
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
@@ -127,8 +126,7 @@ This step is optional. An Azure SQL DB has been already provisioned.
     az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
     ```
 
-    > [!TIP]
-    >
+    > [!NOTE]
     > Collect as much data as you want, then stop the process.
     > You can look into the output folder (**C:\temp\output**) to find a CSV file that also gives the details of the performance data collected.
 
@@ -169,9 +167,11 @@ This step is optional. An Azure SQL DB has been already provisioned.
 
     Learn more about using [CLI to get SKU recommendation](https://github.com/Azure-Samples/data-migration-sql/blob/main/CLI/sql-server-sku-recommendation.md#get-sku-recommendation-though-console-parameters)
 
-3. HTML recommendations result
+### View Assessment & SKU Recommendation
 
-    > You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
+1. **HTML recommendations result**
+
+    You can look into the output folder (C:\temp\output) to find an HTML file that also gives the details of the SKU being recommended.
 
     ![sku-recommendation-html](../../../media/sqldb-sku-recommendation-html.png)
 

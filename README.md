@@ -14,16 +14,16 @@ Take advantage of this one-click SQL Migration PoC to accelerate your migration 
 
 ## Migration Scenarios
 
-| Destination | Migration Scenario | Scripting language |
-|---------    |---------           |:---------:           |
-| Azure SQL DB | Assessment and SKU recommendation | [CLI](./AzureSQLDB/assessment/CLI/azuresqldb-assessment-sku-using-cli.md) / [PowerShell](./AzureSQLDB/assessment/PowerShell/azuresqldb-assessment-sku-using-ps.md) |
-| Azure SQL DB | Offline migration for Azure SQL Database | [CLI](./AzureSQLDB/migration/CLI/azuresqldb-offline-migration-using-cli.md) / [PowerShell](/AzureSQLDB/migration/PowerShell/azuresqldb-offline-migration-using-ps.md)|
-|Azure SQL MI | Assessment and SKU recommendation | [CLI](./AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md) / [PowerShell](./AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md) |
-|Azure SQL MI | Offline migration for Azure SQL Managed Instance using Storage Account | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-azure-storage-ps.md)|
-|Azure SQL MI | Offline migration for Azure SQL Managed Instance using File Share | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-file-share-ps.md) |
-|Azure SQL MI | Online migration for Azure SQL Managed Instance using Storage Account | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-online-migration-using-azure-storage-ps.md)|
+| Destination | Migration Scenario | Scripting language | User experience (UX) |
+|---------    |---------           |:---------:           |:---------:  |
+| Azure SQL DB | Assessment and SKU recommendation | [CLI](./AzureSQLDB/assessment/CLI/azuresqldb-assessment-sku-using-cli.md) / [PowerShell](./AzureSQLDB/assessment/PowerShell/azuresqldb-assessment-sku-using-ps.md) | [ADS](./AzureSQLDB/assessment/ADS/azuresqldb-assessment-sku-using-ads.md)|
+| Azure SQL DB | Offline migration for Azure SQL Database | [CLI](./AzureSQLDB/migration/CLI/azuresqldb-offline-migration-using-cli.md) / [PowerShell](/AzureSQLDB/migration/PowerShell/azuresqldb-offline-migration-using-ps.md)|  |
+|Azure SQL MI | Assessment and SKU recommendation | [CLI](./AzureSQLMI/assessment/CLI/azuresqlmi-assessment-sku-using-cli.md) / [PowerShell](./AzureSQLMI/assessment/PowerShell/azuresqlmi-assessment-sku-using-ps.md) | [ADS](./AzureSQLMI/assessment/ADS/azuresqlmi-assessment-sku-using-ads.md)|
+|Azure SQL MI | Offline migration for Azure SQL Managed Instance using Storage Account | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-azure-storage-ps.md)|  |
+|Azure SQL MI | Offline migration for Azure SQL Managed Instance using File Share | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-file-share-ps.md) |  |
+|Azure SQL MI | Online migration for Azure SQL Managed Instance using Storage Account | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-azure-storage-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-online-migration-using-azure-storage-ps.md)|  |
 |Azure SQL MI | Online migration for Azure SQL Managed Instance using File Share | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-offline-migration-using-file-share-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-offline-migration-using-file-share-ps.md)
-|Azure SQL MI | Login migration | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-login-migration-using-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-login-migration-using-ps.md) |
+|Azure SQL MI | Login migration | [CLI](./AzureSQLMI/migration/CLI/azuresqlmi-login-migration-using-cli.md) / [PowerShell](/AzureSQLMI/migration/PowerShell/azuresqlmi-login-migration-using-ps.md) |  |
 
 ## Youtube walkthrough
 
