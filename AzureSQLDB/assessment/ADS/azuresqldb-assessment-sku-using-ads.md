@@ -7,10 +7,6 @@ Designed to focus on the functionality data platform developers use the most, Az
 
 The [Azure SQL migration extension for Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/azure-sql-migration-extension?view=sql-server-ver16) enables you to assess, get Azure recommendations and migrate your SQL Server databases to Azure SQL.
 
-## Prerequisites
-
-- SQL Server with Windows authentication or SQL authentication access
-
 ## Getting Started
 
 > [!CAUTION]
