@@ -82,13 +82,13 @@ After accessing the home page of Azure SQL Migration, follow these steps:
 
 ### Azure SQL target
 
-1. Link your account to Azure Data Studio by clicking "Link account".
-2. Proceed with the authentication process.
-3. After authentication, select the subscription, location, and Azure SQL Database server.
-4. Enter the target username and password, using the same ones provided on the deployment page.
-5. Click "Connect".
-6. Select the target database "AdventureWorks".
-7. Click "Next".
+- Link your account to Azure Data Studio by clicking "Link account".
+- Proceed with the authentication process.
+- After authentication, select the subscription, location, and Azure SQL Database server.
+- Enter the target username and password, using the same ones provided on the deployment page.
+- Click "Connect".
+- Select the target database "AdventureWorks".
+- Click "Next".
 
 ![ads-sqldb-migration-sql-target](/media/ADS/ads-sqldb-migration-sql-target.png)
 
@@ -99,18 +99,16 @@ It's time to register it.
 
 ![ads-sqldb-migration-sql-target](/media/ADS/ads-sqldb-migration-register-dms.png)
 
-Certainly, here are the steps broken down:
-
-1. Go back to the Azure Portal.
-2. Find the resource group where you deployed this solution.
-3. Locate the resource named "PocMigrationService" within the resource group.
-4. Access the "PocMigrationService" resource.
-5. Click on "View integration runtime".
+- Go back to the Azure Portal.
+- Find the resource group where you deployed this solution.
+- Locate the resource named "PocMigrationService" within the resource group.
+- Access the "PocMigrationService" resource.
+- Click on "View integration runtime".
 
 ![ads-sqldb-migration-register-dms-portal](/media/ADS/ads-sqldb-migration-register-dms-portal.png)
 
-You will notice that there is no Integration runtime set up. 
-Let's set up a new one. 
+You will notice that there is no Integration runtime set up.
+Let's set up a new one.
 click "Configuration integration runtime"
 
 You'll notice that there's currently no Integration Runtime set up.
@@ -121,20 +119,22 @@ Let's establish a new one.
 ![ads-sqldb-migration-register-dms-conf-ir](/media/ADS/ads-sqldb-migration-register-dms-conf-ir.png)
 
 A new window will open with instructions on how to download and install the integration runtime.
-However, there's no need to download and install it. 
+However, there's no need to download and install it.
 
 We will simply register it.
 
 - Copy authentication key #1.
 
+![ads-sqldb-migration-register-dms-portal-key](/media/ADS/ads-sqldb-migration-register-dms-portal-key.png)
+
 Now, return to the "JB-Migration" VM.
 
 #### Register Integration runtime
 
-1. On the Windows search bar, type "Microsoft Integration Runtime" and press Enter.
-2. Open the Microsoft Integration Runtime app.
-3. Paste the key you copied from the Azure Portal into the "Register Integration Runtime (Self-hosted)" field.
-4. Click "Register".
+- On the Windows search bar, type "Microsoft Integration Runtime" and press Enter.
+- Open the Microsoft Integration Runtime app.
+- Paste the key you copied from the Azure Portal into the "Register Integration Runtime (Self-hosted)" field.
+- Click "Register".
 
 ![ads-sqldb-migration-register-dms-key](/media/ADS/ads-sqldb-migration-register-dms-key.png)
 
@@ -148,26 +148,27 @@ After successfully registering the integration runtime, return to Azure Data Stu
 
 ![ads-sqldb-migration-register-dms-success](/media/ADS/ads-sqldb-migration-register-dms-success.png)
 
-1. Click "Next".
-2. Insert the password to connect to the SQL Server.
-3. On the "Table selection" page, click "Edit" to migrate table schema and data.
+- Click "Next".
 
 ### Schema and Data migration
 
+- Insert the password to connect to the SQL Server.
+- On the "Table selection" page, click "Edit" to migrate table schema and data.
+
 ![ads-sqldb-migration-datasource-conf](/media/ADS/ads-sqldb-migration-datasource-conf.png)
 
-1. Switch to the "Missing on target" tab.
-2. Select all tables.
-3. Ensure that the "Migration schema to target" option is selected.
-4. Click "Update"
+- Switch to the "Missing on target" tab.
+- Select all tables.
+- Ensure that the "Migration schema to target" option is selected.
+- Click "Update"
 
 ![ads-sqldb-migration-datasource-conf](/media/ADS/ads-sqldb-migration-datasource-tables.png)
 
 The last step before starting the migration is to run a validation.
 
-1. Click "Run validation".
-2. The validation process will start and finish successfully after a few minutes.
-3. Click "Done" and then "Next" to proceed.
+- Click "Run validation".
+- The validation process will start and finish successfully after a few minutes.
+- Click "Done" and then "Next" to proceed.
 
 ![ads-sqldb-migration-run-validation](/media/ADS/ads-sqldb-migration-run-validation.png)
 
@@ -183,7 +184,6 @@ Now, the migration will start, and you can monitor its progress on the home page
 
 - Click "Database migrations in progress".
 - After a few minutes, you'll see the migration status indicating "in progress".
-
 
 ![ads-sqldb-migration-monitoring-overview](/media/ADS/ads-sqldb-migration-monitoring-overview.png)
 

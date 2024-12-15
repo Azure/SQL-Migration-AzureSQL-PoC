@@ -167,7 +167,7 @@ The template provisions the following resources in the Azure subscription
 - Virtual network peering
 
 > [!IMPORTANT]
-> Please note that it takes 30 to 40 min approximately to provision all these resources in an Azure subscription.
+> Please note that it takes 15 to 20 min approximately to provision all these resources in an Azure subscription.
 
 Some of the Azure services provisioned require a globally unique name and a “suffix” has been added to their names to ensure uniqueness.
 
